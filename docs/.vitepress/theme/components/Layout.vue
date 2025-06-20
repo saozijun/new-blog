@@ -14,7 +14,7 @@ const { Layout } = DefaultTheme;
   <ParticlesBg />
   <Layout>
     <template #nav-bar-title-after>
-      <div style="display: flex; align-items: center; gap: 10px">
+      <div class="title">
         <img width="50px" :class="{ darkImg: isDark }" src="../static/sign.svg" alt="" />
         <img width="30px" style="position: relative; top: -2px" src="../static/xiaoxin.gif" alt="" />
       </div>
@@ -33,8 +33,16 @@ const { Layout } = DefaultTheme;
 </template>
 
 <style scoped>
+.title{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 64px;
+  overflow: hidden;
+}
 .darkImg {
   transform: translateY(-200px);
   filter: drop-shadow(#fff 0 200px);
+  overflow: hidden;
 }
 </style>
