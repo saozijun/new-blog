@@ -6,6 +6,9 @@ export default defineConfig({
   description: "XinC blog",
   lastUpdated: true,
   lang: 'zh-CN',
+  head:[
+    ['link', { rel: 'icon', href: '/xiaoxin.gif' }]
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [

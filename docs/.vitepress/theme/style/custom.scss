@@ -116,6 +116,7 @@
 // 渐入动画
 /* 左边目录 */
 .VPSidebar {
+  opacity: .8 !important;
   &::-webkit-scrollbar {
     width: 6px;
   }

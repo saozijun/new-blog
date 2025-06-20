@@ -4,6 +4,7 @@ import { useData } from "vitepress";
 import { toggleDark } from "../utils/Dark";
 import SplashCursor from "./SplashCursor.vue";
 import ParticlesBg from "./ParticlesBg.vue";
+import Music from "./Music.vue";
 import Lt from "./Lt.vue";
 const { isDark } = useData();
 toggleDark();
@@ -21,6 +22,7 @@ const { Layout } = DefaultTheme;
     </template>
     <template #layout-bottom>
       <ClientOnly>
+        <Music />
         <SplashCursor />
       </ClientOnly>
     </template>
