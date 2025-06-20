@@ -99,8 +99,6 @@ const onMouseMove = (e) => {
   }deg)`;
 };
 onMounted(() => {
-  console.log("挂载");
-  
   // 确保在重新挂载时先清理可能存在的旧事件
   if (mouseMoveHandler.value) {
     window.removeEventListener("mousemove", mouseMoveHandler.value);
@@ -114,9 +112,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   // 取消监听鼠标移动事件
-  if (mouseMoveHandler.value) {
-    console.log("取消监听鼠标移动事件");
-    
+  if (mouseMoveHandler.value) { 
     window.removeEventListener("mousemove", mouseMoveHandler.value);
     mouseMoveHandler.value = null;
   }

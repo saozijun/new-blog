@@ -12,6 +12,8 @@
 
 ✔️笔记图片预览
 
+✔️ 添加不蒜子访客统计
+
 ## 待完善 （暂时想到的）
 
 完善主页内容和样式
@@ -20,5 +22,27 @@
 
 添加评论功能
 
-添加访客统计
+添加音乐组件（纠结中...）
 
+::: code-group
+
+```js [config.js]
+/**
+ * @type {import('vitepress').UserConfig}
+ */
+const config = {
+  // ...
+}
+
+export default config
+```
+
+```ts [config.ts]
+import type { UserConfig } from 'vitepress'
+
+const config: UserConfig = {
+  // ...
+}
+
+export default config
+```

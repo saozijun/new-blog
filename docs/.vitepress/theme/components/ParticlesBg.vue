@@ -12,7 +12,8 @@
 <script setup lang="ts">
 import { useMouse, useDevicePixelRatio } from "@vueuse/core";
 import { ref, onMounted, onBeforeUnmount, watch, computed, reactive } from "vue";
-
+import { useData } from "vitepress";
+let { isDark } = useData()
 type Circle = {
   x: number;
   y: number;
@@ -53,7 +54,8 @@ const { pixelRatio } = useDevicePixelRatio();
 
 const color = computed(() => {
   // Remove the leading '#' if it's present
-  let hex = props.color.replace(/^#/, "");
+  let color = isDark.value ? "#FFF" : "#333"
+  let hex = color.replace(/^#/, "");
 
   // If the hex code is 3 characters, expand it to 6 characters
   if (hex.length === 3) {
@@ -257,6 +259,6 @@ function animate() {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1111;
+    z-index: -1;
 }
 </style>

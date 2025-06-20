@@ -1,15 +1,156 @@
-::view-transition-old(*) {
-  animation: none;
-}
-::view-transition-new(*) {
-  animation: globalDark .5s ease-in;
+:root {
+  --perspective: 400vmax;
+  --distance: -0.75;
+  --duration: 1.2s;
+  --ease: ease-in-out;
+  view-transition-name: none;
 }
 
-@keyframes globalDark {
-  from {
-    clip-path: circle(0% at var(--darkX) var(--darkY));
+body {
+  view-transition-name: body;
+}
+
+/* 主题背景色切换 */
+html {
+  transition: background var(--duration) var(--ease);
+}
+
+::view-transition-new(body),
+::view-transition-old(body) {
+  transform: perspective(var(--perspective)) translate3d(0, 0, 0);
+  animation: travel var(--duration);
+  backface-visibility: hidden;
+  background: inherit; /* 继承html的背景色 */
+}
+
+::view-transition-new(body) {
+  --rotation-start: 90deg;
+  --rotation-end: 0deg;
+  --depth-start: 1;
+  --depth-end: 0;
+}
+
+::view-transition-old(body) {
+  --depth-end: 1;
+  --depth-start: 0;
+  --rotation-start: 0deg;
+  --rotation-end: -90deg;
+}
+
+@keyframes travel {
+  0% {
+    animation-timing-function: ease-in;
+    transform: perspective(var(--perspective))
+      translate3d(
+        0,
+        0,
+        calc((var(--perspective) * var(--distance)) * var(--depth-start))
+      )
+      rotateY(var(--rotation-start, 0deg))
+      translate3d(0, 0, calc(50vw * var(--depth-start)));
   }
-  to {
-    clip-path: circle(100% at var(--darkX) var(--darkY));
+  25% {
+    animation-timing-function: var(--ease);
+    transform: perspective(var(--perspective))
+      translate3d(0, 0, calc(var(--perspective) * var(--distance)))
+      rotateY(var(--rotation-start, 0deg)) translate3d(0, 0, 50vw);
   }
+  75% {
+    animation-timing-function: var(--ease);
+    transform: perspective(var(--perspective))
+      translate3d(0, 0, calc(var(--perspective) * var(--distance)))
+      rotateY(var(--rotation-end, -90deg)) translate3d(0, 0, 50vw);
+  }
+  100% {
+    animation-timing-function: var(--ease);
+    transform: perspective(var(--perspective))
+      translate3d(
+        0,
+        0,
+        calc((var(--perspective) * var(--distance)) * var(--depth-end))
+      )
+      rotateY(var(--rotation-end, 0deg))
+      translate3d(0, 0, calc(50vw * var(--depth-end)));
+  }
+}
+
+html::before,
+html::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-size: cover;
+  transition: opacity calc(var(--duration) * 0.25) calc(var(--duration) * 0.5) ease-out,
+    background-position calc(var(--duration) * 1) ease-out;
+  z-index: -1;
+}
+
+/* 白天模式背景 */
+html::before {
+  background-image: url(../static/clouds.svg);
+  z-index: -1;
+  opacity: 0; /* 默认隐藏云朵 */
+  transition: transform var(--duration) var(--ease); /* 添加过渡效果 */
+}
+
+/* 夜间模式背景 */
+html::after {
+  background-image: url(../static/stars.svg);
+  z-index: -1;
+  opacity: 0; /* 默认隐藏星星 */
+}
+
+/* 主题背景控制 */
+html[data-invert='true'] {
+  background: #34d0ff;
+}
+
+html[data-invert='false'] {
+  background: #01022e;
+}
+
+/* 夜间模式星星显示 */
+html[data-invert='false']::after {
+  opacity: 1;
+}
+
+html[data-invert='false']::before {
+  opacity: 0.1;
+  transform: translateX(20px); /* 向右移动 */
+}
+
+/* 白天模式云彩显示 */
+html[data-invert='true']::before {
+  opacity: 1;
+  transform: translateX(0); /* 恢复原位 */
+}
+
+html[data-invert='true']::after {
+  opacity: 0;
+}
+
+/* 初始状态控制 */
+.dark html::after {
+  opacity: 1; /* 暗黑模式下显示星星 */
+}
+
+.dark html::before {
+  opacity: 0.1; /* 暗黑模式下云朵半透明 */
+}
+
+:not(.dark) html::before {
+  opacity: 1; /* 亮色模式下显示云朵 */
+}
+
+:not(.dark) html::after {
+  opacity: 0; /* 亮色模式下隐藏星星 */
+}
+
+.VPSwitchAppearance {
+  width: 22px !important;
+}
+
+.VPSwitchAppearance .check {
+  transform: none !important;
 }

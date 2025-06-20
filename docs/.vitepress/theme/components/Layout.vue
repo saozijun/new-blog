@@ -3,6 +3,7 @@ import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 import { toggleDark } from "../utils/Dark";
 import SplashCursor from "./SplashCursor.vue";
+import ParticlesBg from "./ParticlesBg.vue";
 import Lt from "./Lt.vue";
 const { isDark } = useData();
 toggleDark();
@@ -10,6 +11,7 @@ const { Layout } = DefaultTheme;
 </script>
 
 <template>
+  <ParticlesBg />
   <Layout>
     <template #nav-bar-title-after>
       <div style="display: flex; align-items: center; gap: 10px">
