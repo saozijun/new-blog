@@ -3,7 +3,7 @@ import { errorCodeType } from '../utils/error-code-type';
 // 创建axios实例
 const service = axios.create({
     // 服务接口请求
-    baseURL: 'https://www.wyy.saozijun.top',
+    baseURL: 'https://www.saozijun.top',
     // 超时设置
     // timeout: 15000,
     withCredentials: true,
