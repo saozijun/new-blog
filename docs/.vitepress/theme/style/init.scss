@@ -1,0 +1,94 @@
+:root {
+  --font-family: "Alimama";
+  font-family: var(--font-family); 
+} 
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  // 移动端点击有蓝色底
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  text-decoration: none; 
+}
+
+
+span {
+  line-height: 100%;
+}
+
+/* 页面 */
+html,
+body {
+  min-width: fit-content;
+  font-family: var(--font-family), Helvetica, sans-serif;
+  // scroll-behavior: smooth;
+  a {
+    text-decoration: none !important;
+  }
+  a:active,
+  a:focus,
+  a:valid,
+  a:active {
+    background-color: none !important;
+  }
+}
+
+/* 字体 */
+@font-face {
+  font-display: swap;
+  font-family: Alimama;
+  src: url("./Alimama.woff2") format("woff2");
+}
+@media screen and (width <= 768px) {
+  html {
+    font-size: 14px; /* 当前屏幕尺寸除以划分的等份:320/15 */
+  }
+}
+
+@media screen and (width >= 750px) {
+  html {
+    font-size: 16px; /* 当前屏幕尺寸除以划分的等份:720/15 */
+  }
+} 
+
+// 全局滚动条
+::-webkit-scrollbar {
+  // width: 6px;
+  width: 0;
+  height: 0;
+  background-color: #fbfbfc00;
+}
+
+/* 定义滚动条轨道 内部
+  内阴影+圆角 */
+::-webkit-scrollbar-track {
+  background-color: #fbfbfc00;
+  border-radius: 1rem;
+  transition: background-color 0.2s;
+}
+
+.dark ::-webkit-scrollbar-track {
+  transition: background-color 0.2s;
+  background-color: #080808;
+}
+
+/* 定义滑块
+  内阴影+圆角 */
+::-webkit-scrollbar-thumb {
+  background-color: #2b2b2b;
+  border-radius: 1rem;
+  box-shadow: 0 0 4px rgb(134 134 134 / 20%);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgb(85 85 85);
+}
+
+.disabled-img-view {
+  cursor: inherit;
+}
