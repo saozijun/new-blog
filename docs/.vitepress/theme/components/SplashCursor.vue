@@ -1198,7 +1198,7 @@ onMounted(() => {
 @media screen and (max-width: 768px) {
     .box {
         canvas{
-            opacity: 1;
+            opacity: .3;
         }
     }
     

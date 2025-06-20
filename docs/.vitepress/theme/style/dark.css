@@ -12,6 +12,8 @@ body {
 
 /* 主题背景色切换 */
 html {
+  width: 100vw;
+  overflow-x: hidden;
   transition: background var(--duration) var(--ease);
 }
 
@@ -117,17 +119,27 @@ html[data-invert='false']::after {
 
 html[data-invert='false']::before {
   opacity: 0.1;
-  transform: translateX(20px); /* 向右移动 */
+  animation: cloudMove 30s linear infinite; /* Add animation for clouds in dark mode */
 }
 
 /* 白天模式云彩显示 */
 html[data-invert='true']::before {
   opacity: 1;
-  transform: translateX(0); /* 恢复原位 */
+  animation: starsMove 45s linear infinite; /* Add animation for clouds in light mode */
 }
 
 html[data-invert='true']::after {
   opacity: 0;
+}
+
+@keyframes cloudMove {
+  0% { background-position: 0px; }
+  100% { background-position: -1000px 0; }
+}
+
+@keyframes starsMove {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 0; }
 }
 
 /* 初始状态控制 */
@@ -137,10 +149,12 @@ html[data-invert='true']::after {
 
 .dark html::before {
   opacity: 0.1; /* 暗黑模式下云朵半透明 */
+  animation: cloudMove 30s linear infinite; /* Add animation for clouds in dark mode */
 }
 
 :not(.dark) html::before {
   opacity: 1; /* 亮色模式下显示云朵 */
+  animation: cloudMove 45s linear infinite; /* Add animation for clouds in light mode */
 }
 
 :not(.dark) html::after {

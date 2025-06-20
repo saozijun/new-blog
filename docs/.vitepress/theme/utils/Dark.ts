@@ -19,7 +19,7 @@ const initThemeState = (isDark: boolean) => {
   document.documentElement.style.setProperty('--distance', `-${defaultConfig.distance}`)
   document.documentElement.style.setProperty('--duration', `${defaultConfig.duration}s`)
   document.documentElement.dataset.invert = (!isDark).toString()
-  document.documentElement.style.background = isDark ? '#01022e' : '#34d0ff'
+  document.documentElement.style.background = isDark ? '#1b1b1f' : '#ffffff'
 }
 
 // 切换动画
@@ -38,7 +38,7 @@ export const toggleDark = () => {
       isDark.value = !isDark.value
       return
     }
-
+    document.documentElement.style.background = isDark.value ? '#01022e' : '#34d0ff'
     // 设置点击位置变量
     document.documentElement.style.setProperty('--darkX', x + 'px')
     document.documentElement.style.setProperty('--darkY', y + 'px')
@@ -58,6 +58,9 @@ export const toggleDark = () => {
       // 切换主题数据属性和背景色
       document.documentElement.dataset.invert = (!isDark.value).toString()
       document.documentElement.style.background = isDark.value ? '#01022e' : '#34d0ff'
+      setTimeout(() => {
+        document.documentElement.style.background = isDark.value ? '#1b1b1f' : '#ffffff'
+      }, 1000)
     })
 
     await transition.finished
