@@ -1,6 +1,7 @@
 <template>
     <div class="title">
-        <img width="50px" :src="img" alt="" />
+        <img width="50px" v-bind:src="img" alt="" />
+        {{ img }}
         <img width="30px" style="position: relative; top: -2px" src="../static/xiaoxin.gif" alt="" />
     </div>
 </template>
