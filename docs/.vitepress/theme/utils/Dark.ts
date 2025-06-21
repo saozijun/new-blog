@@ -38,6 +38,7 @@ export const toggleDark = () => {
       isDark.value = !isDark.value
       return
     }
+    document.documentElement.classList.add('is-transitioning')
     document.documentElement.style.background = isDark.value ? '#01022e' : '#34d0ff'
     // 设置点击位置变量
     document.documentElement.style.setProperty('--darkX', x + 'px')
@@ -64,5 +65,6 @@ export const toggleDark = () => {
     })
 
     await transition.finished
+    document.documentElement.classList.remove('is-transitioning')
   })
 }

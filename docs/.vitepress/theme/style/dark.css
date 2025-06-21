@@ -86,6 +86,7 @@ html::after {
   transition: opacity calc(var(--duration) * 0.25) calc(var(--duration) * 0.5) ease-out,
     background-position calc(var(--duration) * 1) ease-out;
   z-index: -1;
+  opacity: 0;
 }
 
 /* 白天模式背景 */
@@ -118,14 +119,20 @@ html[data-invert='false']::after {
 }
 
 html[data-invert='false']::before {
-  opacity: 0.1;
-  animation: cloudMove 30s linear infinite; /* Add animation for clouds in dark mode */
+  opacity: 0;
+}
+
+html.is-transitioning[data-invert='false']::before {
+  animation: cloudMove 1.2s linear infinite;
 }
 
 /* 白天模式云彩显示 */
 html[data-invert='true']::before {
-  opacity: 1;
-  animation: starsMove 45s linear infinite; /* Add animation for clouds in light mode */
+  opacity: 0;
+}
+
+html.is-transitioning[data-invert='true']::before {
+  animation: starsMove 1.2s linear infinite;
 }
 
 html[data-invert='true']::after {
@@ -133,13 +140,13 @@ html[data-invert='true']::after {
 }
 
 @keyframes cloudMove {
-  0% { background-position: 0px; }
-  100% { background-position: -1000px 0; }
+  0% { background-position: 0 0; opacity: 0.1; }
+  100% { background-position: -100px 0; opacity: 1; }
 }
 
 @keyframes starsMove {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 0; }
+  0% { background-position: -100px 0; opacity: 1; }
+  100% { background-position: 0 0;  opacity: 0.1; }
 }
 
 /* 初始状态控制 */
@@ -149,12 +156,10 @@ html[data-invert='true']::after {
 
 .dark html::before {
   opacity: 0.1; /* 暗黑模式下云朵半透明 */
-  animation: cloudMove 30s linear infinite; /* Add animation for clouds in dark mode */
 }
 
 :not(.dark) html::before {
   opacity: 1; /* 亮色模式下显示云朵 */
-  animation: cloudMove 45s linear infinite; /* Add animation for clouds in light mode */
 }
 
 :not(.dark) html::after {
