@@ -5,6 +5,13 @@
                 <Sign width="280px" />
             </div>
             <h1 class="tagline">A personal blog to share something interesting.</h1>
+            <div>
+                <span>嘘，偷偷告诉你，这里可能有：</span>
+                <FlipWords
+                    :words="['技术尝试', '常用工具', '碎碎念', 'Bug记录','其他小日记']"
+                    :duration="3000"
+                />
+            </div>
             <div class="marquee-wrapper">
                 <Marquee>
                     <div class="lable-item" v-for="(v, i) in labelList" :key="i" v-bind:style="{ 
@@ -23,14 +30,14 @@
             <p class="description">... 站点装修中 ...</p>
         </header>
         <div class="content">
-            <div class="marquee-wrapper">
+            <!-- <div class="marquee-wrapper">
                 <Marquee>
                     <div class="marquee-item" v-for="i in 5" :key="i">{{ i }}</div>
                 </Marquee>
                 <Marquee reverse>
                     <div class="marquee-item" v-for="i in 5" :key="i">{{ i }}</div>
                 </Marquee>
-            </div>
+            </div> -->
             <div v-if="pvCount && uvCount">
                 本站总访问量 {{ pvCount }} - 
                 本站访客数 {{ uvCount }}
@@ -45,6 +52,7 @@
 import Sign from "./Sign.vue";
 import Loxbe from "./Loxbe.vue";
 import Marquee from "./Marquee.vue";
+import FlipWords from "./FlipWords.vue";
 
 import { ref, onMounted, computed, nextTick } from "vue";
 const labelList = ref([{
