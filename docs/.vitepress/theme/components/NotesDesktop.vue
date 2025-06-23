@@ -44,8 +44,6 @@
 import ButtonText from "./ButtonText.vue";
 import { ref, onMounted, nextTick } from "vue";
 import gsap from "gsap";
-import { inBrowser } from "vitepress";
-
 const props = defineProps({
   notes: {
     type: Array,
@@ -57,18 +55,15 @@ const noteRef = ref(null);
 const noteBoxRef = ref(null);
 const noteTitleRef = ref(null);
 const noteBoxInnerRef = ref(null);
-const noteItemRefs = ref([]);
 const noteT3Ref = ref(null);
 const noteT5Ref = ref(null);
 const noteBoxFooterRef = ref(null);
 
 onMounted(() => {
   nextTick(async () => {
-    if (inBrowser) {
       let gsapCj = await import("gsap/ScrollTrigger");
       const { ScrollTrigger } = gsapCj;
       gsap.registerPlugin(ScrollTrigger);
-    }
     init();
   });
 });

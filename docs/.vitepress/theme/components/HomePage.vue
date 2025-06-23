@@ -37,7 +37,9 @@
     
     <!-- Desktop version (shown only on larger screens) -->
     <div class="desktop-only">
-      <NotesDesktop :notes="notes" />
+      <ClientOnly>
+        <NotesDesktop :notes="notes" />
+      </ClientOnly>
     </div>
     
     <!-- Mobile version (shown only on smaller screens) -->
@@ -54,9 +56,7 @@
   <span id="busuanzi_value_site_pv"></span>
   <span id="busuanzi_value_site_uv"></span>
   <div class="image-trail">
-    <ClientOnly>
-      <ImageTrail />
-    </ClientOnly>
+    <ImageTrail />
   </div>
 </template>
 
@@ -70,7 +70,7 @@ import NotesDesktop from "./NotesDesktop.vue";
 import NotesMobile from "./NotesMobile.vue";
 import { ref, onMounted, nextTick } from "vue";
 import bgImage from "../static/note-bg3.jpg";
-
+import { inBrowser } from "vitepress";
 const notes = ref([
   {
     id: 1,
