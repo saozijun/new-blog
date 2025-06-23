@@ -62,14 +62,9 @@ const noteBoxFooterRef = ref(null);
 
 onMounted(() => {
   nextTick(async () => {
-    console.log(inBrowser);
-    
     if (inBrowser) {
-      let gsapCj = await import("gsap/ScrollTrigger");
-      console.log('gsapCj', gsapCj);
-      
-      const { ScrollTrigger } = gsapCj;
-      gsap.registerPlugin(ScrollTrigger);
+      let module = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(module.default);
       init();
     }
   });
