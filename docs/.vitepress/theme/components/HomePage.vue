@@ -54,7 +54,9 @@
   <span id="busuanzi_value_site_pv"></span>
   <span id="busuanzi_value_site_uv"></span>
   <div class="image-trail">
-    <ImageTrail />
+    <ClientOnly>
+      <ImageTrail />
+    </ClientOnly>
   </div>
 </template>
 
