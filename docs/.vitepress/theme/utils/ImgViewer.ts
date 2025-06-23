@@ -28,6 +28,11 @@ export const bindFancybox =  () => {
     const imgs = document.querySelectorAll('.vp-doc img')
     imgs.forEach((img) => {
       const image = img as HTMLImageElement
+      // Skip images with data-no-fancybox attribute
+      if (image.hasAttribute('data-no-fancybox')) {
+        return
+      }
+      
       if (!image.hasAttribute('data-fancybox')) {
         image.setAttribute('data-fancybox', 'gallery')
       }

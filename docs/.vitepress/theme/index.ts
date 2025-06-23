@@ -3,6 +3,8 @@ import { onMounted, onUnmounted } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import Layout from './components/Layout.vue'
 import Sign from "./components/Sign.vue"
+import Tool from './page/tool/index.vue'
+import Archive from './page/archive/index.vue'
 import busuanzi from 'busuanzi.pure.js'
 
 import 'virtual:group-icons.css'
@@ -19,6 +21,8 @@ export default {
   Layout: Layout,
   async enhanceApp({ app, router }) {
     app.component('Sign', Sign)
+    app.component('Tool', Tool)
+    app.component('Archive', Archive)
     if (inBrowser) {
       router.onBeforeRouteChange = () => {
         destroyFancybox() // 销毁图片查看器

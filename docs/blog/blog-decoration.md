@@ -28,7 +28,4 @@
 
 添加归档功能
 
-![效果](../public/xiaoxin.gif)
-![效果](../public/sign.png)
-
 

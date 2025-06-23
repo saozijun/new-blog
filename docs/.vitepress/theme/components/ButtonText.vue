@@ -40,6 +40,9 @@ let props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+.container {
+  position: relative;
+}
 .button {
   cursor: pointer;
   background: none;
@@ -50,6 +53,7 @@ let props = defineProps({
   font-weight: 600;
   color: var(--vp-c-text-1);
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .arrow {
@@ -58,7 +62,7 @@ let props = defineProps({
   pointer-events: none;
   width: 24px;
   right: 0;
-  top: 30%;
+  top: 18%;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
