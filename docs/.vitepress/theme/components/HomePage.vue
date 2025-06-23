@@ -36,9 +36,9 @@
     </header>
     
     <div class="desktop-only">
-      <KeepAlive>
+      <ClientOnly>
         <NotesDesktop :notes="notes" />
-      </KeepAlive>
+      </ClientOnly>
     </div>
     
     <div class="mobile-only">
