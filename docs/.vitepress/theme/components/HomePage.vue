@@ -297,5 +297,8 @@ onMounted(() => {
   .marquee-wrapper {
     max-width: calc(100vw - 48px);
   }
+  .content{
+    font-size: 14px;
+  }
 }
 </style>
