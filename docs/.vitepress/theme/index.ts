@@ -3,7 +3,6 @@ import { onMounted, onUnmounted } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import Layout from './components/Layout.vue'
 import Sign from "./components/Sign.vue"
-import HomePage from "./components/HomePage.vue"
 import busuanzi from 'busuanzi.pure.js'
 
 import 'virtual:group-icons.css'
@@ -19,7 +18,6 @@ export default {
   // 使用注入插槽的包装组件覆盖 Layout
   Layout: Layout,
   async enhanceApp({ app, router }) {
-    app.component('HomePage', HomePage)
     app.component('Sign', Sign)
     if (inBrowser) {
       router.onBeforeRouteChange = () => {

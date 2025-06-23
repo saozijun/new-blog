@@ -3,5 +3,7 @@
 layout: home
 footer: true 
 ---
-
+<script setup>
+    import HomePage from './.vitepress/theme/components/HomePage.vue'
+</script>
 <HomePage />

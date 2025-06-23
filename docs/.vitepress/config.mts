@@ -53,17 +53,19 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '主页', link: '/' },
+      { text: '工具', link: '/tool/index' },
+      { text: '归档', link: '/archive/index' },
       { text: '笔记', link: '/blog/blog-decoration' }
     ],
     siteTitle: false,
-    sidebar: [
-      {
+    sidebar: {
+      "/blog/blog-decoration" :[{
         text: '小破站装修日记',
         items: [
-          { text: '装修清单', link: '/blog/blog-decoration' },
+          { text: '装修清单', rel: 'blog', link: '/blog/blog-decoration' },
         ]
-      }
-    ],
+      }]
+    },
     footer: {
       copyright: `Copyright © 2025-present XinC`,
     },
