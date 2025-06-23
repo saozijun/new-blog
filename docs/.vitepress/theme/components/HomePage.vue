@@ -35,14 +35,12 @@
       <p class="description">... 站点装修中 ...</p>
     </header>
     
-    <!-- Desktop version (shown only on larger screens) -->
     <div class="desktop-only">
-      <ClientOnly>
+      <KeepAlive>
         <NotesDesktop :notes="notes" />
-      </ClientOnly>
+      </KeepAlive>
     </div>
     
-    <!-- Mobile version (shown only on smaller screens) -->
     <div class="mobile-only">
       <NotesMobile :notes="notes" />
     </div>
