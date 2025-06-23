@@ -43,10 +43,8 @@
 <script setup>
 import ButtonText from "./ButtonText.vue";
 import { ref, onMounted, nextTick } from "vue";
-import gsap from "gsap";
-import { inBrowser } from "vitepress";
-import { useScrollTrigger } from '../utils/useScrollTrigger.js'
-
+import { inject } from 'vue'
+const gsap = inject('gsap')
 const props = defineProps({
   notes: {
     type: Array,
@@ -62,8 +60,13 @@ const noteT3Ref = ref(null);
 const noteT5Ref = ref(null);
 const noteBoxFooterRef = ref(null);
 
+onMounted(() => {
+  nextTick(() => {
+    init();
+  });
+});
+
 const init = () => {
-  if (!noteRef.value || !noteBoxInnerRef.value) return
   // 创建时间轴
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -131,7 +134,6 @@ const init = () => {
     .to(noteBoxInnerRef.value, { background: "#0000", duration: 3 }, 5)
     .to({}, { duration: 3 }, 10);
 };
-useScrollTrigger(init);
 </script>
 
 <style lang="scss" scoped>

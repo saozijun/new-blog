@@ -6,6 +6,8 @@ import Sign from "./components/Sign.vue"
 import Tool from './page/tool/index.vue'
 import Archive from './page/archive/index.vue'
 import busuanzi from 'busuanzi.pure.js'
+import gsap from 'gsap'
+
 
 import 'virtual:group-icons.css'
 import { bindFancybox, destroyFancybox } from './utils/ImgViewer' // 图片查看器
@@ -24,6 +26,10 @@ export default {
     app.component('Tool', Tool)
     app.component('Archive', Archive)
     if (inBrowser) {
+      let scrollTriggerModule = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(scrollTriggerModule.default)
+
+      app.provide('gsap', gsap)
       router.onBeforeRouteChange = () => {
         destroyFancybox() // 销毁图片查看器
       }
