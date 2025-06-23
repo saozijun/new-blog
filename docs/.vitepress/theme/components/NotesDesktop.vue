@@ -66,6 +66,8 @@ onMounted(() => {
     
     if (inBrowser) {
       let gsapCj = await import("gsap/ScrollTrigger");
+      console.log('gsapCj', gsapCj);
+      
       const { ScrollTrigger } = gsapCj;
       gsap.registerPlugin(ScrollTrigger);
       init();
