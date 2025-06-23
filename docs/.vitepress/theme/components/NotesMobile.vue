@@ -44,7 +44,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .notes-mobile {
   width: 100%;
-  padding: 1rem;
+  // padding: 1rem;
   margin-top: 2rem;
 }
 
@@ -69,7 +69,7 @@ const props = defineProps({
 .notes-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .note-card {
