@@ -44,8 +44,8 @@
 import ButtonText from "./ButtonText.vue";
 import { ref, onMounted, nextTick } from "vue";
 import { inject } from 'vue'
-import noteBg3 from "../static/note-bg3.jpg";
-import noteBg4 from "../static/note-bg4.jpg";
+import noteBg3 from "../static/xiaoxin/bixin.png";
+import noteBg4 from "../static/xiaoxin/notes.png";
 const gsap = inject('gsap')
 const props = defineProps({
   notes: {
