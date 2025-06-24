@@ -1,24 +1,25 @@
 <template>
     <div class="archive-page">
-        <div class="page-header">
+        <div class="page-header" data-fade style="--lv: 0;">
             <div>
                 <h1 class="page-title">全部文章</h1>
                 <div class="post-stats">共计 {{ postLength }} 篇文章</div>
+                <p style="font-size: 12px;">tip：目前是假数据啦,数据太少了不好调试,先用假数据。标签页是真数据！</p>
             </div>
-            <img src="../../static/xiaoxin/notes.png" alt="">
+            <img data-no-fancybox src="../../static/xiaoxin/notes.png" alt="">
         </div>
         
-        <div class="timeline">
+        <div class="timeline" data-fade style="--lv: 1;">
             <div v-for="(yearItem, index) in postList" :key="index" class="year-section">
                 <div class="year-header">
                     <div class="year-label">{{ yearItem.title }}</div>
                     <div class="post-count">{{ yearItem.posts.length }} 篇</div>
                 </div>
                 <div class="sticky-year">
-                    <img src="../../static/xiaoxin/launch.png" alt="">
+                    <img data-no-fancybox src="../../static/xiaoxin/launch.png" alt="">
                     {{ yearItem.title }}
                 </div>
-                <div class="post-list">
+                <div class="post-list" data-fades style="--lv: 3;">
                     <div v-for="(post, postIndex) in yearItem.posts" :key="postIndex" class="post-item" @click="goPost(post.url)">
                         <div class="post-meta">
                             <div class="post-date">
@@ -86,11 +87,11 @@ const getPostLength = () => {
 const useMockData = () => {
     const mockData = [
         {
-            title: '2024',
+            title: '2025',
             posts: [
                 {
                     url: '/mock-post-1',
-                    dateText: ['2024-03-15', '2024-03-16'],
+                    dateText: ['2025-03-15', '2025-03-16'],
                     category: '技术',
                     title: '深入探索Vue 3组合式API',
                     abstract: '本文将带你深入了解Vue 3中强大的组合式API，探索其如何帮助我们组织更清晰、更可维护的代码。',
@@ -98,20 +99,20 @@ const useMockData = () => {
                 },
                 {
                     url: '/mock-post-2',
-                    dateText: ['2024-02-20', '2024-02-20'],
+                    dateText: ['2025-02-20', '2025-02-20'],
                     category: '生活',
-                    title: '我的2024年旅行计划',
+                    title: '我的2025年旅行计划',
                     abstract: '记录我想去的地方，以及为实现这些旅行计划所做的准备。',
                     tags: ['旅行', '生活', '计划']
                 }
             ]
         },
         {
-            title: '2023',
+            title: '2024',
             posts: [
                 {
                     url: '/mock-post-3',
-                    dateText: ['2023-11-10', '2023-11-12'],
+                    dateText: ['2024-11-10', '2024-11-12'],
                     category: '技术',
                     title: 'VitePress搭建个人博客指南',
                     abstract: '从零开始，一步步教你如何使用VitePress快速搭建一个美观、高效的个人博客网站。',
@@ -119,7 +120,7 @@ const useMockData = () => {
                 },
                 {
                     url: '/mock-post-4',
-                    dateText: ['2023-08-05', '2023-08-05'],
+                    dateText: ['2024-08-05', '2024-08-05'],
                     category: '学习',
                     title: '如何高效学习一门新语言',
                     abstract: '分享一些个人关于学习新编程语言的经验和技巧，希望能帮助你更快入门。',
@@ -127,7 +128,7 @@ const useMockData = () => {
                 },
                 {
                     url: '/mock-post-5',
-                    dateText: ['2023-05-20', '2023-05-20'],
+                    dateText: ['2024-05-20', '2024-05-20'],
                     category: '技术',
                     title: 'CSS Grid布局奇妙之旅',
                     abstract: '探索CSS Grid布局的强大功能，并通过实例展示如何创建复杂的响应式布局。',
@@ -136,11 +137,11 @@ const useMockData = () => {
             ]
         },
         {
-            title: '2022',
+            title: '2023',
             posts: [
                  {
                     url: '/mock-post-6',
-                    dateText: ['2022-07-18', '2022-07-19'],
+                    dateText: ['2023-07-18', '2023-07-19'],
                     category: '随笔',
                     title: '关于写作的思考',
                     abstract: '为什么写作，写作给我带来了什么，以及如何更好地写作。',
@@ -156,12 +157,13 @@ const useMockData = () => {
 
 onMounted(() => {
   posts.value = postsYearData(data)
-  getPost()
-  getPostLength()
-//   useMockData()
+//   getPost()
+//   getPostLength()
+  useMockData()
 })
 
 const goPost = (url) => {
+    return
   router.go(url)
 }
 </script>
@@ -228,7 +230,7 @@ const goPost = (url) => {
         color: var(--vp-c-brand);
         padding: 4px 10px;
         border-radius: 8px;
-        margin-left: -3.05rem;
+        margin-left: -46.5px;
         width: fit-content;
         z-index: 5;
         writing-mode: vertical-lr;
@@ -277,6 +279,8 @@ const goPost = (url) => {
     
     .post-list {
         padding-bottom: 0.5rem;
+        position: relative;
+        top: -20px;
     }
     
     .post-item {
@@ -421,7 +425,7 @@ const goPost = (url) => {
     @media (max-width: 768px) {
         padding: 2rem 1rem;
         .sticky-year{
-            margin-left: -3.65rem;
+            margin-left: -49.5px;
         }
         .year-section {
             padding-left: 2.5rem;

@@ -5,6 +5,7 @@ import MessageComponent from '../components/Message.vue'
 interface MessageInstance {
   id: string;
   vm: ComponentPublicInstance;
+  height: number;
 }
 
 interface MessageOptions {
@@ -32,13 +33,19 @@ interface MessageFunction {
 const instances: MessageInstance[] = []
 let seed = 1
 
-// 计算消息的垂直偏移量
-const getVerticalOffset = (offset = 20): number => {
-  let verticalOffset = offset
-  instances.forEach(({ vm }) => {
-    verticalOffset += (vm.$el.offsetHeight || 0) + 16
+// 消息之间的间距
+const MESSAGE_GAP = 16
+// 消息的最小高度（包含内边距）
+const MIN_HEIGHT = 54
+
+// 更新所有消息的位置
+const updatePositions = () => {
+  let currentOffset = 20
+  instances.forEach(instance => {
+    // @ts-ignore
+    instance.vm.offset = currentOffset
+    currentOffset += instance.height + MESSAGE_GAP
   })
-  return verticalOffset
 }
 
 // 基础消息方法
@@ -78,10 +85,7 @@ const MessageBase = (options: MessageOptions | string = {}): MessageReturn => {
       }
       
       // 更新剩余消息的位置
-      instances.forEach(({ vm }) => {
-        const verticalOffset = getVerticalOffset()
-        vm.$el.style.top = `${verticalOffset}px`
-      })
+      updatePositions()
       
       // 调用用户传入的关闭回调
       if (typeof mergedOptions.onClose === 'function') {
@@ -104,17 +108,24 @@ const MessageBase = (options: MessageOptions | string = {}): MessageReturn => {
   // 添加到DOM
   document.body.appendChild(container)
   
-  // 计算位置
-  const verticalOffset = getVerticalOffset()
-  vm.$el.style.top = `${verticalOffset}px`
-  
-  // 添加到实例列表
+  // 创建实例对象并添加到实例列表
   const instance: MessageInstance = {
     id,
-    vm
+    vm,
+    height: MIN_HEIGHT // 初始化为最小高度
   }
   
   instances.push(instance)
+  
+  // 使用 setTimeout 确保 DOM 已更新并且元素已渲染
+  setTimeout(() => {
+    // 更新实例的高度，确保至少有最小高度
+    const elHeight = vm.$el.offsetHeight
+    instance.height = Math.max(elHeight, MIN_HEIGHT)
+    
+    // 更新所有消息的位置
+    updatePositions()
+  }, 50)
   
   // 设置自动关闭
   let timer: number | null = null

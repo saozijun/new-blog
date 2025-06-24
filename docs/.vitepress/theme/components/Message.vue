@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 const props = defineProps({
   id: String,
@@ -23,11 +23,22 @@ const props = defineProps({
   onDestroy: {
     type: Function,
     default: () => {}
+  },
+  offset: {
+    type: Number,
+    default: 20
   }
 });
 
 // 控制显示和隐藏
 const visible = ref(false);
+// 实际偏移量
+const currentOffset = ref(props.offset);
+
+// 监听offset属性变化
+watch(() => props.offset, (newVal) => {
+  currentOffset.value = newVal;
+});
 
 onMounted(() => {
   // 显示元素，用于触发进入动画
@@ -58,7 +69,13 @@ const iconClass = () => {
 
 // 暴露方法给父组件
 defineExpose({
-  close
+  close,
+  set offset(val) {
+    currentOffset.value = val;
+  },
+  get offset() {
+    return currentOffset.value;
+  }
 });
 </script>
 
@@ -68,6 +85,7 @@ defineExpose({
       v-show="visible"
       class="message"
       :class="[`message-${type}`]"
+      :style="{ top: `${currentOffset}px` }"
     >
       <div class="message-content">
         <span class="message-icon" :class="iconClass()"></span>
@@ -83,7 +101,6 @@ defineExpose({
 <style scoped>
 .message {
   position: fixed;
-  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   min-width: 300px;
@@ -96,7 +113,7 @@ defineExpose({
   align-items: center;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   background: var(--vp-c-bg);
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s, top 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .message-content {
@@ -179,7 +196,7 @@ defineExpose({
 
 .message-fade-enter-active,
 .message-fade-leave-active {
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s, top 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .message-fade-enter-from,

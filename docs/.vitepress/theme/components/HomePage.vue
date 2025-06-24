@@ -46,6 +46,7 @@
     </div>
     
     <div class="content">
+      <p style="font-size: 12px;">tip：笔记还是假数据，调试用滴！</p>
       <div v-if="pvCount && uvCount">
         本站总访问量 {{ pvCount }} - 本站访客数 {{ uvCount }}
       </div>
@@ -262,7 +263,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   box-sizing: border-box;
-  height: 30vh;
+  height: 40vh;
   overflow: hidden;
 }
 

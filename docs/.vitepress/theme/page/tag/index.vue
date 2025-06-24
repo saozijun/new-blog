@@ -1,15 +1,15 @@
 <template>
     <div class="tag-page">
-        <div class="page-header">
+        <div class="page-header" data-fade style="--lv: 0;">
             <div>
                 <h1 class="page-title">标签列表</h1>
                 <div class="post-stats">共计 {{ tagCount }} 个标签</div>
             </div>
-            <img src="../../static/xiaoxin/notes.png" alt="">
+            <img data-no-fancybox src="../../static/xiaoxin/notes.png" alt="">
         </div>
         
         <div class="tag-container">
-            <div class="tag-list">
+            <div class="tag-list"  data-fades style="--lv: 3;">
                 <div 
                     v-for="(tag, index) in Object.keys(posts)" 
                     :key="index" 
@@ -26,14 +26,14 @@
             
             <div class="post-container" v-if="currentTag">
                 <div class="tag-header">
-                    <div class="current-tag">
-                        <img src="../../static/xiaoxin/launch.png" alt="">
+                    <div class="current-tag"  data-fade style="--lv: 2;">
+                        <img data-no-fancybox src="../../static/xiaoxin/launch.png" alt="">
                         <span class="tag-label"># {{ currentTag }}</span>
                     </div>
-                    <div class="tag-post-count">{{ posts[currentTag].length }} 篇文章</div>
+                    <div  data-fade style="--lv: 2;" class="tag-post-count">{{ posts[currentTag].length }} 篇文章</div>
                 </div>
                 
-                <div class="post-list">
+                <div class="post-list" data-fades style="--lv: 3;">
                     <div v-for="(post, postIndex) in posts[currentTag]" :key="postIndex" class="post-item" @click="goPost(post.url)">
                         <div class="post-meta">
                             <div class="post-date">
@@ -66,7 +66,6 @@
             </div>
             
             <div class="empty-state" v-else>
-                <img src="../../static/xiaoxin/xiaoxin.gif" alt="">
                 <p>请从左侧选择一个标签</p>
             </div>
         </div>
@@ -206,6 +205,8 @@ const goPost = (url) => {
         img {
             width: 30px;
             margin-right: 0.5rem;
+            position: relative;
+            top: -2px;
         }
     }
     

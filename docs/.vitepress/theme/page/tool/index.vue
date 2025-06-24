@@ -1,6 +1,6 @@
 <template>
     <div class="tool-page">
-        <div class="page-header">
+        <div class="page-header"  data-fade style="--lv: 0;">
             <div>
                 <h1 class="page-title">工具箱</h1>
                 <div class="tool-stats">实用工具集合，持续添加中...</div>
@@ -8,7 +8,7 @@
             <img src="../../static/xiaoxin/bixin.png" alt="">
         </div>
         
-        <div class="tools-container">
+        <div class="tools-container"  data-fades style="--lv: 1;">
             <div v-for="(tool, index) in tools" :key="index" class="tool-card" @click="openTool(tool)">
                 <div class="tool-icon">
                     {{ tool.shortName }}

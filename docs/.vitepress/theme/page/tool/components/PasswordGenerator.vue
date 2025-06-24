@@ -317,7 +317,7 @@ watch([passwordLength, includeUppercase, includeLowercase, includeNumbers, inclu
         height: 6px;
         -webkit-appearance: none;
         appearance: none;
-        background-color: var(--vp-c-gutter);
+        background-color:#00000021;
         border-radius: 3px;
         outline: none;
         
@@ -477,7 +477,7 @@ watch([passwordLength, includeUppercase, includeLowercase, includeNumbers, inclu
     
     .strength-bar-container {
       height: 8px;
-      background-color: var(--vp-c-gutter);
+      background-color:#00000021;
       border-radius: 4px;
       overflow: hidden;
       

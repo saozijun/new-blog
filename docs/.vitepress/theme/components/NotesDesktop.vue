@@ -90,9 +90,9 @@ const init = () => {
         rotationZ: 0,
         duration: 3,
       },
-      3
+      2
     )
-    .to(noteBoxInnerRef.value, { height: 310, duration: 3.5 }, 0.5);
+    .to(noteBoxInnerRef.value, { height: 310, duration: 3.5 }, 0.5)
   // 使用循环为每个笔记项添加动画
   const positions = [
     { x: 440, y: 0 },
@@ -131,6 +131,8 @@ const init = () => {
     .to(noteT3Ref.value, { opacity: 1, y: -260, duration: 2, scale: 1 }, 5)
     .to(noteT5Ref.value, { opacity: 0.2, y: -240, duration: 3, scale: 1.8 }, 5)
     .to(noteBoxFooterRef.value, { opacity: 1, y: 420, duration: 3 }, 5)
+    .to(noteBoxInnerRef.value, { scale: 0, opacity: 0, duration: 2 }, 3.5)
+    .to(noteBoxInnerRef.value, { scale: 1, background: "#0000",opacity: 1, duration: 1 }, 5.5)
     .to(noteBoxInnerRef.value, { background: "#0000", duration: 3 }, 5)
     .to({}, { duration: 3 }, 10);
 };
