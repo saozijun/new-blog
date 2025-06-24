@@ -44,6 +44,8 @@
 import ButtonText from "./ButtonText.vue";
 import { ref, onMounted, nextTick } from "vue";
 import { inject } from 'vue'
+import noteBg3 from "../static/note-bg3.jpg";
+import noteBg4 from "../static/note-bg4.jpg";
 const gsap = inject('gsap')
 const props = defineProps({
   notes: {
@@ -131,6 +133,9 @@ const init = () => {
     .to(noteT3Ref.value, { opacity: 1, y: -260, duration: 2, scale: 1 }, 5)
     .to(noteT5Ref.value, { opacity: 0.2, y: -240, duration: 3, scale: 1.8 }, 5)
     .to(noteBoxFooterRef.value, { opacity: 1, y: 420, duration: 3 }, 5)
+    .to(noteBoxInnerRef.value, { background: `url(${noteBg3}) no-repeat center center`,duration: 0}, 2.5)
+    .to(noteBoxInnerRef.value, { background: `url(${noteBg3}) no-repeat center center`, duration: 0}, 3)
+    .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`, duration: 0}, 3.5)
     .to(noteBoxInnerRef.value, { scale: 0, opacity: 0, duration: 2 }, 3.5)
     .to(noteBoxInnerRef.value, { scale: 1, background: "#0000",opacity: 1, duration: 1 }, 5.5)
     .to(noteBoxInnerRef.value, { background: "#0000", duration: 3 }, 5)
