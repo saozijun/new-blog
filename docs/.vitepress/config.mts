@@ -53,9 +53,9 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '主页', link: '/' },
-      { text: '工具', link: '/tool', activeMatch: '/tool/' },
-      { text: '归档', link: '/archive', activeMatch: '/archive/' },
-      { text: '标签', link: '/tag', activeMatch: '/tag/' },
+      { text: '工具', link: '/tool'},
+      { text: '归档', link: '/archive'},
+      { text: '标签', link: '/tag'},
       { text: '笔记', link: '/post/blog/blog-decoration' }
     ],
     siteTitle: false,
