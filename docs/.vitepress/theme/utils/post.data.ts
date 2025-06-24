@@ -40,13 +40,11 @@ export default createContentLoader('post/**/*.md', {
       const updatedDate = lastUpdated ? +new Date(lastUpdated) : ''
       // 链接去掉项目名
       const link = normalize(url).split(sep).filter((item) => item).join(sep)
-      console.log(createdDate,updatedDate);
-      
       if (createdDate && updatedDate) {
         // 如果有手动设置的时间，直接使用
         posts.push({
           title,
-          url: link.replace(/post\//, ''),
+          url: link,
           date: [createdDate, updatedDate],
           dateText: [dateOption.format(createdDate), dateOption.format(updatedDate)],
           abstract,
@@ -57,7 +55,7 @@ export default createContentLoader('post/**/*.md', {
         // 如果没有时间，根据 git 时间戳获取
         const task: Promise<Post> = getGitTimestamp(`docs/${link.replace(/.html/, '')}.md`, createdDate, updatedDate).then((date) => ({
           title,
-          url: link.replace(/post\//, ''), // 由于使用了 rewrites 重定向，这里也对 url 作处理
+          url: link, // 由于使用了 rewrites 重定向，这里也对 url 作处理 replace(/post\//, '')
           date: [date[0], date[1]] as [number, number],
           dateText: [dateOption.format(date[0]), dateOption.format(date[1])],
           abstract,
