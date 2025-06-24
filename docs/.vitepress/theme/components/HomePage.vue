@@ -68,7 +68,7 @@ import NotesDesktop from "./NotesDesktop.vue";
 import NotesMobile from "./NotesMobile.vue";
 import { ref, onMounted, nextTick } from "vue";
 import bgImage from "../static/note-bg3.jpg";
-import { inBrowser } from "vitepress";
+
 const notes = ref([
   {
     id: 1,

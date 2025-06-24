@@ -3,11 +3,9 @@ import { onMounted, onUnmounted } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import Layout from './components/Layout.vue'
 import Sign from "./components/Sign.vue"
-import Tool from './page/tool/index.vue'
-import Archive from './page/archive/index.vue'
+import Message from './utils/message'
 import busuanzi from 'busuanzi.pure.js'
 import gsap from 'gsap'
-
 
 import 'virtual:group-icons.css'
 import { bindFancybox, destroyFancybox } from './utils/ImgViewer' // 图片查看器
@@ -23,13 +21,17 @@ export default {
   Layout: Layout,
   async enhanceApp({ app, router }) {
     app.component('Sign', Sign)
-    app.component('Tool', Tool)
-    app.component('Archive', Archive)
+    // 添加全局Message方法
+    app.config.globalProperties.$message = Message
+    
     if (inBrowser) {
       let scrollTriggerModule = await import('gsap/ScrollTrigger')
       gsap.registerPlugin(scrollTriggerModule.default)
 
       app.provide('gsap', gsap)
+      // 提供 Message 给组件使用
+      app.provide('message', Message)
+      
       router.onBeforeRouteChange = () => {
         destroyFancybox() // 销毁图片查看器
       }
