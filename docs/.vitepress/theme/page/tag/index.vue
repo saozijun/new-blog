@@ -33,8 +33,8 @@
                     <div  data-fade style="--lv: 2;" class="tag-post-count">{{ posts[currentTag].length }} 篇文章</div>
                 </div>
                 
-                <div class="post-list" data-fades style="--lv: 3;">
-                    <div v-for="(post, postIndex) in posts[currentTag]" :key="postIndex" class="post-item" @click="goPost(post.url)">
+                <div class="post-list" data-fades style="--lv: 3;" :key="tagContainerKey">
+                    <div v-for="(post, postIndex) in posts[currentTag]" :key="post.title" class="post-item" @click="goPost(post.url)">
                         <div class="post-meta">
                             <div class="post-date">
                                 <div class="date-created">
@@ -82,9 +82,10 @@ const router = useRouter();
 let posts = ref({})
 let currentTag = ref('')
 let tagCount = computed(() => Object.keys(posts.value).length)
-
+const tagContainerKey = ref(0);
 const selectTag = (tag) => {
     currentTag.value = tag
+    tagContainerKey.value += 1;
 }
 
 onMounted(() => {

@@ -163,7 +163,7 @@ const clearResult = () => {
     
     &.is-dragover {
       border-width: 3px;
-      box-shadow: 0 0 10px rgba(var(--vp-c-brand-rgb), 0.3);
+      box-shadow: 0 0 10px var(--vp-c-brand);
     }
     
     .file-input {
@@ -261,7 +261,7 @@ const clearResult = () => {
         }
         
         &.change-btn {
-          background-color: rgba(var(--vp-c-brand-rgb), 0.7);
+          background-color: var(--vp-c-brand);
           
           &:hover {
             background-color: var(--vp-c-brand);

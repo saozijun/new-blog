@@ -13,16 +13,16 @@
                 v-for="(category, idx) in categories" 
                 :key="idx"
                 :class="['category-tab', { active: currentCategory === category.id }]"
-                @click="currentCategory = category.id"
+                @click="changeCategory(category.id)"
             >
                 {{ category.name }}
             </button>
         </div>
         
-        <div class="tools-container" data-fades style="--lv: 1;">
+        <div class="tools-container" data-fades style="--lv: 1;" :key="toolsContainerKey">
             <div 
-                v-for="(tool, index) in filteredTools" 
-                :key="index" 
+                v-for="tool in filteredTools" 
+                :key="tool.name" 
                 class="tool-card"
                 :class="{ 'external-tool': tool.isExternal }"
                 @click="handleToolClick(tool)"
@@ -81,15 +81,6 @@ import { ref, markRaw, defineAsyncComponent, computed } from 'vue';
 const ImgTobase64 = defineAsyncComponent(() => 
     import('./components/ImgTobase64.vue')
 );
-const JsonFormatter = defineAsyncComponent(() => 
-    import('./components/JsonFormatter.vue')
-);
-const TimestampConverter = defineAsyncComponent(() => 
-    import('./components/TimestampConverter.vue')
-);
-const PasswordGenerator = defineAsyncComponent(() => 
-    import('./components/PasswordGenerator.vue')
-);
 
 // 分类
 const categories = [
@@ -99,6 +90,13 @@ const categories = [
 ];
 
 const currentCategory = ref('all');
+const toolsContainerKey = ref(0);
+
+// 切换分类
+const changeCategory = (categoryId) => {
+    currentCategory.value = categoryId;
+    toolsContainerKey.value += 1;
+};
 
 // 工具列表
 const tools = [
