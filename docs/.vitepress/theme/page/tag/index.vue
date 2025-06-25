@@ -407,11 +407,6 @@ const goPost = (url) => {
             align-items: flex-start;
             gap: 0.5rem;
         }
-        
-        .post-date {
-            flex-direction: column;
-            gap: 0.5rem;
-        }
     }
 }
 </style>

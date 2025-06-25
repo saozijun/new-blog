@@ -7,7 +7,7 @@ export default defineConfig({
   lastUpdated: true,
   lang: 'zh-CN',
   head: [
-    ['link', { rel: 'icon', href: '/xiaoxin.gif' }]
+    ['link', { rel: 'icon', href: '/favicon.gif' }]
   ],
   themeConfig: {
     algolia: {
