@@ -1,6 +1,6 @@
 <template>
   <div class="content" ref="containerRef">
-    <div v-for="(url, i) in items" :key="i" class="content__img">
+    <div v-for="(url, i) in items" :key="i" class="content__img" :style="{width: `${size}px`}">
       <div
         class="content__img-inner"
         :style="{ backgroundImage: `url(${url})` }"></div>
@@ -47,6 +47,10 @@ const props = defineProps({
         iconVscode,
         iconPython
     ]
+  },
+  size: {
+    type: Number,
+    default: 80
   },
   variant: {
     type: Number,

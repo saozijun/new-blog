@@ -56,14 +56,16 @@ export default defineConfig({
       { text: '工具', link: '/tool'},
       { text: '归档', link: '/archive'},
       { text: '标签', link: '/tag'},
-      { text: '笔记', link: '/post/blog/blog-decoration' }
+      { text: '笔记', link: '/post/blog/blog-decoration', activeMatch: '/post/blog/' }
     ],
     siteTitle: false,
     sidebar: {
-      "/post/blog/blog-decoration" :[{
+      "/post/blog/" :[{
         text: '小破站装修日记',
         items: [
-          { text: '装修清单', rel: 'blog', link: '/post/blog/blog-decoration' },
+          { text: '装修清单', link: '/post/blog/blog-decoration' },
+          { text: '站点记录', link: '/post/blog/记录' },
+          { text: '炫酷组件', link: '/post/blog/component' },
         ]
       }]
     },

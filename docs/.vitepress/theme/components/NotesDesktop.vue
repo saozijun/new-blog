@@ -73,7 +73,7 @@ const init = () => {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: noteRef.value,
-      start: "top center-=50",
+      start: "top center-=20",
       end: "+=1500",
       scrub: 1,
       anticipatePin: 1,
@@ -130,9 +130,9 @@ const init = () => {
   // 标题和底部动画
   tl.to(noteT3Ref.value, { opacity: 0, scale: 0, duration: 2 }, 2)
     .to(noteT5Ref.value, { opacity: 0, scale: 0, duration: 2 }, 2)
-    .to(noteT3Ref.value, { opacity: 1, y: -260, duration: 2, scale: 1 }, 5)
-    .to(noteT5Ref.value, { opacity: 0.2, y: -240, duration: 3, scale: 1.8 }, 5)
-    .to(noteBoxFooterRef.value, { opacity: 1, y: 420, duration: 3 }, 5)
+    .to(noteT3Ref.value, { opacity: 1, y: -260, duration: 2, scale: 0.8 }, 5)
+    .to(noteT5Ref.value, { opacity: 0.2, y: -250, duration: 3, scale: 1.6 }, 5)
+    .to(noteBoxFooterRef.value, { opacity: 1, y: 360, duration: 3 }, 5)
     .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`,duration: 0}, 2.5)
     .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`, duration: 0}, 2.8)
     .to(noteBoxInnerRef.value, { background: `url(${noteBg3}) no-repeat center center`, duration: 0}, 3.3)
