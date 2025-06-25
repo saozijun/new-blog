@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 
 const props = defineProps({
   id: String,
@@ -34,26 +34,49 @@ const props = defineProps({
 const visible = ref(false);
 // 实际偏移量
 const currentOffset = ref(props.offset);
+// 是否开始过渡动画
+const isStartTransition = ref(false);
 
 // 监听offset属性变化
 watch(() => props.offset, (newVal) => {
   currentOffset.value = newVal;
 });
 
-onMounted(() => {
-  // 显示元素，用于触发进入动画
-  setTimeout(() => {
-    visible.value = true;
-  }, 0);
-});
+let stopTimer = undefined;
+
+// 开始定时器
+const startTimer = () => {
+  if (props.duration === 0) return;
+  stopTimer = setTimeout(() => {
+    close();
+  }, props.duration);
+};
+
+// 清除定时器
+const clearTimer = () => {
+  if (stopTimer) {
+    clearTimeout(stopTimer);
+    stopTimer = undefined;
+  }
+};
 
 // 关闭消息
 const close = () => {
   visible.value = false;
-  // 等待过渡动画结束后调用销毁函数
-  setTimeout(() => {
-    props.onDestroy();
-  }, 300);
+  
+  // 如果消息从未开始过渡，可以立即销毁
+  nextTick(() => {
+    if (!isStartTransition.value) {
+      props.onDestroy();
+    }
+  });
+};
+
+// 键盘事件处理
+const keydown = (event) => {
+  if (event.code === 'Escape') {
+    close();
+  }
 };
 
 // 获取图标类名
@@ -66,6 +89,14 @@ const iconClass = () => {
   };
   return typeMap[props.type];
 };
+
+onMounted(() => {
+  startTimer();
+  visible.value = true;
+  
+  // 添加键盘事件监听
+  document.addEventListener('keydown', keydown);
+});
 
 // 暴露方法给父组件
 defineExpose({
@@ -80,12 +111,21 @@ defineExpose({
 </script>
 
 <template>
-  <transition name="message-fade">
+  <transition
+    name="message-fade"
+    @before-enter="isStartTransition = true"
+    @before-leave="clearTimer"
+    @after-leave="onDestroy"
+  >
     <div
       v-show="visible"
+      :id="id"
       class="message"
       :class="[`message-${type}`]"
       :style="{ top: `${currentOffset}px` }"
+      role="alert"
+      @mouseenter="clearTimer"
+      @mouseleave="startTimer"
     >
       <div class="message-content">
         <span class="message-icon" :class="iconClass()"></span>
@@ -103,105 +143,169 @@ defineExpose({
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  min-width: 300px;
-  max-width: 500px;
-  padding: 15px 20px;
-  border-radius: 4px;
-  overflow: hidden;
+  width: fit-content;
+  max-width: calc(100vw - 48px);
+  min-width: 120px;
+  padding: 14px 20px;
+  border-radius: 10px;
   z-index: 9999;
   display: flex;
   align-items: center;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  gap: 12px;
   background: var(--vp-c-bg);
-  transition: opacity 0.3s, transform 0.3s, top 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .message {
+    background: rgba(30, 30, 30, 0.92);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+  }
 }
 
 .message-content {
   display: flex;
   align-items: center;
   width: 100%;
+  gap: 12px;
 }
 
 .message-icon {
-  margin-right: 10px;
-  font-size: 16px;
   width: 20px;
   height: 20px;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
-/* 简单的图标实现 */
-.success-icon::before {
-  content: '✓';
-  color: #67c23a;
+/* 简约图标设计 - Light Theme */
+.success-icon {
+  background-color: #d1fae5;
+  color: #067647;
 }
+.success-icon::before { content: '✓'; }
 
-.warning-icon::before {
-  content: '!';
-  color: #e6a23c;
+.warning-icon {
+  background-color: #fef3c7;
+  color: #92400e;
 }
+.warning-icon::before { content: '!'; }
 
-.info-icon::before {
-  content: 'i';
-  color: var(--vp-c-brand);
-  font-style: italic;
-  font-family: serif;
-  font-weight: bold;
+.info-icon {
+  background-color: #dbeafe;
+  color: #1e40af;
 }
+.info-icon::before { content: 'i'; font-style: normal; font-weight: 600; }
 
-.error-icon::before {
-  content: '×';
-  color: #f56c6c;
+.error-icon {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+.error-icon::before { content: '×'; }
+
+/* Dark Theme Icons */
+@media (prefers-color-scheme: dark) {
+  .success-icon {
+    background-color: #064e3b;
+    color: #a7f3d0;
+  }
+  .warning-icon {
+    background-color: #78350f;
+    color: #fde68a;
+  }
+  .info-icon {
+    background-color: #1e3a8a;
+    color: #bfdbfe;
+  }
+  .error-icon {
+    background-color: #7f1d1d;
+    color: #fecaca;
+  }
 }
 
 .message-text {
   font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--vp-c-text-1);
   flex: 1;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .message-text {
+    color: #f9fafb;
+  }
 }
 
 .message-close {
-  margin-left: 15px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #6b7280;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.message-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  .message-close {
+    color: #9ca3af;
+  }
+  .message-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #d1d5db;
+  }
 }
 
 .close-icon {
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 600;
   line-height: 1;
-  color: #909399;
 }
 
-.message-info {
-  border-left: 4px solid var(--vp-c-brand);
-}
-
-.message-success {
-  border-left: 4px solid #67c23a;
-}
-
-.message-warning {
-  border-left: 4px solid #e6a23c;
-}
-
-.message-error {
-  border-left: 4px solid #f56c6c;
-}
-
+/* 高级简约的过渡动画 */
 .message-fade-enter-active,
 .message-fade-leave-active {
-  transition: opacity 0.3s, transform 0.3s, top 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .message-fade-enter-from,
 .message-fade-leave-to {
   opacity: 0;
-  transform: translate(-50%, -20px);
+  transform: translate(-50%, -20px) scale(0.95);
+}
+
+.message-fade-enter-to,
+.message-fade-leave-from {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+/* 悬停效果 */
+.message:hover {
+  transform: translate(-50%, -2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .message:hover {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+  }
 }
 </style> 

@@ -133,9 +133,9 @@ const init = () => {
     .to(noteT3Ref.value, { opacity: 1, y: -260, duration: 2, scale: 1 }, 5)
     .to(noteT5Ref.value, { opacity: 0.2, y: -240, duration: 3, scale: 1.8 }, 5)
     .to(noteBoxFooterRef.value, { opacity: 1, y: 420, duration: 3 }, 5)
-    .to(noteBoxInnerRef.value, { background: `url(${noteBg3}) no-repeat center center`,duration: 0}, 2.5)
-    .to(noteBoxInnerRef.value, { background: `url(${noteBg3}) no-repeat center center`, duration: 0}, 2.8)
-    .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`, duration: 0}, 3.3)
+    .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`,duration: 0}, 2.5)
+    .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`, duration: 0}, 2.8)
+    .to(noteBoxInnerRef.value, { background: `url(${noteBg3}) no-repeat center center`, duration: 0}, 3.3)
     .to(noteBoxInnerRef.value, { scale: 0, opacity: 0, duration: 2 }, 3.5)
     .to(noteBoxInnerRef.value, { scale: 1, background: "#0000",opacity: 1, duration: 1 }, 5.5)
     .to(noteBoxInnerRef.value, { background: "#0000", duration: 3 }, 5)
@@ -162,8 +162,8 @@ const init = () => {
       width: 100%;
       height: 600px;
       border-radius: 15px;
-      background-color: #0000001f;
-      background: url(../static/note-bg7.jpg) no-repeat center center;
+      background-color: var(--vp-c-bg-soft);
+      background: url(../static/note-bg5.png) no-repeat center center;
       background-size: cover;
       position: absolute;
       top: 0;
@@ -308,7 +308,7 @@ const init = () => {
       align-items: center;
       pointer-events: none;
       z-index: 111;
-      color: #9ab6ad;
+      color: var(--vp-c-text-1); //#9ab6ad
       p {
         font-size: 48px;
         line-height: 1;
@@ -318,7 +318,7 @@ const init = () => {
           color: transparent;
           background-image: linear-gradient(
             180deg,
-            #9ab6ad 0%,
+            var(--vp-c-text-1) 0%,
             transparent 100%
           );
           z-index: -2;

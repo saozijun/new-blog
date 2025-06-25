@@ -1,6 +1,6 @@
 <template>
     <div class="tool-page">
-        <div class="page-header"  data-fade style="--lv: 0;">
+        <div class="page-header" data-fade style="--lv: 0;">
             <div>
                 <h1 class="page-title">工具箱</h1>
                 <div class="tool-stats">实用工具集合，持续添加中...</div>
@@ -8,14 +8,44 @@
             <img src="../../static/xiaoxin/bixin.png" alt="">
         </div>
         
-        <div class="tools-container"  data-fades style="--lv: 1;">
-            <div v-for="(tool, index) in tools" :key="index" class="tool-card" @click="openTool(tool)">
-                <div class="tool-icon">
-                    {{ tool.shortName }}
+        <div class="category-tabs" data-fade style="--lv: 0.5;">
+            <button 
+                v-for="(category, idx) in categories" 
+                :key="idx"
+                :class="['category-tab', { active: currentCategory === category.id }]"
+                @click="currentCategory = category.id"
+            >
+                {{ category.name }}
+            </button>
+        </div>
+        
+        <div class="tools-container" data-fades style="--lv: 1;">
+            <div 
+                v-for="(tool, index) in filteredTools" 
+                :key="index" 
+                class="tool-card"
+                :class="{ 'external-tool': tool.isExternal }"
+                @click="handleToolClick(tool)"
+            >
+                <div class="tool-icon" :style="{ backgroundColor: tool.iconBgColor || 'var(--vp-c-brand)' }">
+                    <span v-if="!tool.iconUrl">{{ tool.shortName }}</span>
+                    <img v-else :src="tool.iconUrl" alt="" />
                 </div>
                 <div class="tool-info">
-                    <h3 class="tool-title">{{ tool.name }}</h3>
+                    <div class="tool-header">
+                        <h3 class="tool-title">{{ tool.name }}</h3>
+                        <span v-if="tool.isExternal" class="external-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </span>
+                    </div>
                     <p class="tool-desc">{{ tool.description }}</p>
+                    <div v-if="tool.tags && tool.tags.length" class="tool-tags">
+                        <span v-for="(tag, tagIdx) in tool.tags" :key="tagIdx" class="tool-tag">{{ tag }}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref, markRaw, defineAsyncComponent } from 'vue';
+import { ref, markRaw, defineAsyncComponent, computed } from 'vue';
 
 // 异步加载组件
 const ImgTobase64 = defineAsyncComponent(() => 
@@ -61,37 +91,123 @@ const PasswordGenerator = defineAsyncComponent(() =>
     import('./components/PasswordGenerator.vue')
 );
 
+// 分类
+const categories = [
+    { id: 'all', name: '全部' },
+    { id: 'local', name: '内部工具' },
+    { id: 'external', name: '外部工具' }
+];
+
+const currentCategory = ref('all');
+
 // 工具列表
 const tools = [
     {
         name: '图片转Base64',
         shortName: '图片',
-        description: '将图片转换为Base64编码，方便在网页中嵌入使用',
-        component: markRaw(ImgTobase64)
+        description: '将图片转换为Base64编码, 方便在网页中嵌入使用',
+        component: markRaw(ImgTobase64),
+        category: 'local',
+        tags: ['图片处理', '编码转换']
     },
     {
-        name: 'JSON格式化工具',
-        shortName: 'JSON',
-        description: '格式化和压缩JSON字符串，方便查看和编辑',
-        component: markRaw(JsonFormatter)
+        name: 'AI工具集',
+        shortName: 'AI',
+        description: 'AI工具集专注于收录和推荐国内外热门、创意、有趣、前沿的AI工具和网站。',
+        externalUrl: 'https://ai-bot.cn/',
+        isExternal: true,
+        category: 'external',
+        tags: ['AI']
     },
     {
-        name: '时间戳转换',
-        shortName: '时间',
-        description: '在Unix时间戳和日期时间之间进行转换',
-        component: markRaw(TimestampConverter)
+        name: 'glTF Viewer',
+        shortName: '3D',
+        description: '3D模型查看工具, 可查看和测试3D模型, 支持多种格式',
+        externalUrl: 'https://gltf-viewer.donmccurdy.com/',
+        isExternal: true,
+        category: 'external',
+        tags: ['3D模型', '模型查看']
     },
     {
-        name: '随机密码生成器',
-        shortName: '密码',
-        description: '生成安全的随机密码，可自定义各种选项',
-        component: markRaw(PasswordGenerator)
+        name: 'Inspira UI',
+        shortName: 'Inspira',
+        description: '一个专为Vue3设计的动效组件库, 站点里好几个都是用的同款。',
+        externalUrl: 'https://inspira-ui.com/',
+        isExternal: true,
+        category: 'external',
+        tags: ['Vue', 'UI组件库', '炫酷组件']
+    },
+    {
+        name: 'React Bits',
+        shortName: 'React Bits',
+        description: 'React设计的动效组件库、动画组件的开源资源库。',
+        externalUrl: 'https://www.reactbits.dev/',
+        isExternal: true,
+        category: 'external',
+        tags: ['React', 'UI组件库', '炫酷组件']
+    },
+    {
+        name: 'Emoji 中文网',
+        shortName: 'Emoji',
+        description: 'Emoji 表情大全, 收录了所有常用表情符号，方便查找和选择。',
+        externalUrl: 'https://www.emojiall.com/zh-hans/',
+        isExternal: true,
+        category: 'external',
+        tags: ['Emoji']
+    },
+    {
+        name: '3D 模型网',
+        shortName: '模型',
+        description: '超好用的3D模型网, 收录了多种类型的3D模型, 质量高, 模型可下载使用。',
+        externalUrl: 'https://sketchfab.com/',
+        isExternal: true,
+        category: 'external',
+        tags: ['3D模型','免费']
+    },
+    {
+        name: 'JS 框架语法特性对比',
+        shortName: 'JS特性对比',
+        description: '各种主流框架 (Vue、React、Angular) 语言特性对比。',
+        externalUrl: 'https://component-party.lainbo.com/',
+        isExternal: true,
+        category: 'external',
+        tags: ['JS', '特性对比']
+    },
+    {
+        name: 'CSS 生成器集合',
+        shortName: 'CSS 生成器',
+        description: '丰富的 CSS 生成器，各种不规则的样式生成器网站',
+        externalUrl: 'https://css-generators.com/',
+        isExternal: true,
+        category: 'external',
+        tags: ['CSS']
     }
 ];
+
+// 根据当前分类过滤工具
+const filteredTools = computed(() => {
+    if (currentCategory.value === 'all') {
+        return tools;
+    } else if (currentCategory.value === 'local') {
+        return tools.filter(tool => !tool.isExternal);
+    } else if (currentCategory.value === 'external') {
+        return tools.filter(tool => tool.isExternal);
+    }
+    return tools;
+});
 
 // 当前激活的工具
 const activeToolComponent = ref(null);
 const activeToolName = ref('');
+
+// 处理工具点击
+const handleToolClick = (tool) => {
+    if (tool.isExternal && tool.externalUrl) {
+        window.open(tool.externalUrl, '_blank');
+    } else {
+        openTool(tool);
+    }
+};
 
 // 打开工具
 const openTool = (tool) => {
@@ -110,7 +226,7 @@ const closeTool = () => {
 
 <style lang="scss" scoped>
 .tool-page {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 3rem 1.5rem;
     color: var(--vp-c-text-1);
@@ -139,10 +255,40 @@ const closeTool = () => {
         }
     }
     
+    .category-tabs {
+        display: flex;
+        gap: 12px;
+        margin: 1.5rem 0;
+        flex-wrap: wrap;
+        
+        .category-tab {
+            background-color: var(--vp-c-bg-soft);
+            border: 1px solid var(--vp-c-divider);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--vp-c-text-2);
+            
+            &:hover {
+                color: var(--vp-c-text-1);
+                border-color: var(--vp-c-brand-light);
+            }
+            
+            &.active {
+                background-color: var(--vp-c-brand-dimm);
+                color: var(--vp-c-brand);
+                border-color: var(--vp-c-brand-light);
+                font-weight: 500;
+            }
+        }
+    }
+    
     .tools-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
         margin: 2rem 0;
         
         .tool-card {
@@ -151,28 +297,21 @@ const closeTool = () => {
             border-radius: 16px;
             padding: 1.5rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             border: 1px solid transparent;
+            height: 100%;
             
-            &:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-                border-color: var(--vp-c-brand);
+            
+            &.external-tool {
+                border-style: dashed;
+                border-color: var(--vp-c-divider);
                 
-                .tool-title {
-                    color: var(--vp-c-brand);
-                    
-                    &:before {
-                        transform: scaleX(1);
-                        transform-origin: bottom left;
-                    }
-                }
-                
-                .tool-icon {
-                    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+                &:hover {
+                    border-style: solid;
+                    border-color: var(--vp-c-brand);
                 }
             }
             
@@ -190,14 +329,37 @@ const closeTool = () => {
                 font-weight: bold;
                 box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
                 transition: all 0.3s ease;
+                flex-shrink: 0;
+                overflow: hidden;
+                text-align: center;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
             
             .tool-info {
                 flex: 1;
+                display: flex;
+                flex-direction: column;
+                
+                .tool-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 8px;
+                    
+                    .external-badge {
+                        color: var(--vp-c-text-3);
+                        display: flex;
+                        align-items: center;
+                    }
+                }
                 
                 .tool-title {
                     width: fit-content;
-                    margin: 0 0 8px 0;
+                    margin: 0;
                     font-size: 18px;
                     font-weight: 600;
                     position: relative;
@@ -218,10 +380,50 @@ const closeTool = () => {
                 }
                 
                 .tool-desc {
-                    margin: 0;
+                    margin: 0 0 12px 0;
                     font-size: 14px;
                     color: var(--vp-c-text-2);
                     line-height: 1.6;
+                    flex-grow: 1;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    word-break: break-word;
+                }
+                
+                .tool-tags {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    
+                    .tool-tag {
+                        font-size: 12px;
+                        padding: 4px 8px;
+                        border-radius: 12px;
+                        background-color: var(--vp-c-bg);
+                        color: var(--vp-c-text-3);
+                        border: 1px solid var(--vp-c-divider);
+                    }
+                }
+            }
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+                border-color: var(--vp-c-brand);
+                
+                .tool-title {
+                    color: var(--vp-c-brand);
+                    
+                    &:before {
+                        transform: scaleX(1) !important;
+                        transform-origin: bottom left;
+                    }
+                }
+                
+                .tool-icon {
+                    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
                 }
             }
         }
@@ -328,6 +530,10 @@ const closeTool = () => {
             .page-title {
                 font-size: 2.2rem;
             }
+        }
+        
+        .tools-container {
+            grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
         }
         
         .tool-dialog {
