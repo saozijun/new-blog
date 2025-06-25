@@ -56,7 +56,7 @@ export default defineConfig({
       { text: '工具', link: '/tool'},
       { text: '归档', link: '/archive'},
       { text: '标签', link: '/tag'},
-      { text: '笔记', link: '/post', activeMatch: '/post' }
+      { text: '笔记', link: '/post/blog/blog-decoration', activeMatch: '/post/blog/' }
     ],
     siteTitle: false,
     sidebar: {
