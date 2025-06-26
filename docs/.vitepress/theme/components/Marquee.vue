@@ -46,14 +46,14 @@ withDefaults(
         left: 0;
         height: 100%;
         width: 30%;
-        background: linear-gradient(to right in oklab,var(--vp-c-bg), #0000 100%);
+        background: linear-gradient(to right in oklab,var(--vp-c-bg-soft), #0000 100%);
         z-index: 1;
         pointer-events: none;
     }
     &::after{
         left: auto;
         right: 0;
-        background: linear-gradient(to left in oklab, var(--vp-c-bg) 0, #0000 100%);
+        background: linear-gradient(to left in oklab, var(--vp-c-bg-soft) 0, #0000 100%);
         
     }
 }

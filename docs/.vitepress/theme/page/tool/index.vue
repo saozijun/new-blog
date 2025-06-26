@@ -173,7 +173,7 @@ const tools = [
     },
     {
         name: 'CSS 生成器集合',
-        shortName: 'CSS 生成器',
+        shortName: ' CSS 生成器',
         description: '丰富的 CSS 生成器，各种不规则的样式生成器网站',
         externalUrl: 'https://css-generators.com/',
         isExternal: true,
@@ -318,6 +318,7 @@ const closeTool = () => {
                 height: 54px;
                 background-color: var(--vp-c-brand);
                 border-radius: 12px;
+                padding: 2px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
