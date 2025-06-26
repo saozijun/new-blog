@@ -512,7 +512,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   color: var(--vp-c-text-1);
-  margin-top: 0px;
+  margin-top: 10px;
   span {
     content: "";
     display: block;
