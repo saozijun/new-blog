@@ -608,13 +608,12 @@ onUnmounted(() => {
   .mobile-only {
     display: block;
   }
-  .test-container {
-    display: none;
-  }
 }
 
 @media screen and (max-width: 960px) {
-
+  .test-container {
+    display: none;
+  }
   .marquee-wrapper {
     max-width: 100%;
   }
