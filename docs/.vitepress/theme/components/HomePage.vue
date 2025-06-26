@@ -592,6 +592,15 @@ onUnmounted(() => {
   .marquee-wrapper {
     max-width: 100%;
   }
+  .tagline {
+    font-size: 1.6rem;
+  }
+  .sign-box {
+    width: 180px;
+  }
+  .about-me-card {
+    padding: 1.2rem;
+  }
   .desktop-only {
     display: none;
   }
@@ -605,24 +614,13 @@ onUnmounted(() => {
 }
 
 @media screen and (max-width: 960px) {
-  .hero {
-    padding-top: 4rem;
-  }
+
   .marquee-wrapper {
     max-width: 100%;
-  }
-  .sign-box {
-    width: 180px;
-  }
-  .tagline {
-    font-size: 2rem;
   }
   .gallery-wrapper {
     height: 40vh;
     margin-top: -80px;
-  }
-  .about-me-card {
-    padding: 1.2rem;
   }
 
   .hobby-icons {
@@ -652,9 +650,6 @@ onUnmounted(() => {
   }
   .sign-box {
     width: 160px;
-  }
-  .tagline {
-    font-size: 1.8rem;
   }
   .about-me-card {
     padding: 1rem;

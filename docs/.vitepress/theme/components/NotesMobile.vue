@@ -45,7 +45,7 @@ const props = defineProps({
 .notes-mobile {
   width: 100%;
   padding: 2rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .section-title {
