@@ -56,16 +56,30 @@ export default defineConfig({
       { text: '工具', link: '/tool'},
       { text: '归档', link: '/archive'},
       { text: '标签', link: '/tag'},
-      { text: '笔记', link: '/post/blog/blog-decoration', activeMatch: '/post/blog/' }
+      { 
+        text: '笔记',
+        activeMatch: '/post/blog/',
+        items: [
+          { text: '装修日记', link: '/post/blog/decoration' },
+          { text: '炫酷组件', link: '/post/blog/loxbe' }
+        ]
+      }
     ],
     siteTitle: false,
     sidebar: {
       "/post/blog/" :[{
         text: '小破站装修日记',
         items: [
-          { text: '装修清单', link: '/post/blog/blog-decoration' },
-          { text: '站点记录', link: '/post/blog/记录' },
-          { text: '炫酷组件', link: '/post/blog/component' },
+          { text: '装修清单', link: '/post/blog/decoration' },
+          { text: '站点记录', link: '/post/blog/siteRecords' },
+        ]
+      },{
+        text: '炫酷组件',
+        items: [
+          { text: '小监工', link: '/post/blog/loxbe' },
+          { text: '文字轮播渐入渐出', link: '/post/blog/flipWords' },
+          { text: '图片路径跟随 📷', link: '/post/blog/imageTrail' },
+  
         ]
       }]
     },

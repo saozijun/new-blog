@@ -42,8 +42,10 @@ const init = () => {
     },
   });
   let item = listRef.value.children;
+  let itemWidth = item[1].offsetWidth; // 获取列表项宽度
   tl2.to(item[0], { scale: 1, duration: 0.5}, 0);
-  tl2.to(listRef.value, { x: -((item.length + 1) * 800 + ((item.length + 3) * 40)) }, 0.54);
+  // 计算平移值 列表项宽度 * 列表项数量 - 盒子之间间隔 * 列表项数量
+  tl2.to(listRef.value, { x: -((item.length - 1) * itemWidth - (item.length - 1) * 40 ) }, 0.54);
 };
 </script>
 

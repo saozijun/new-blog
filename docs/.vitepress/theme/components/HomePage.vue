@@ -256,7 +256,7 @@ onUnmounted(() => {
 }
 .hero {
   width: 100%;
-  height: calc(100vh - 64px);
+  height: 100vh;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -644,7 +644,8 @@ onUnmounted(() => {
 
 @media screen and (max-width: 640px) {
   .hero {
-    padding-top: 3rem;
+    padding-top: 1rem;
+    height: calc(100vh - 124px);
   }
   .marquee-wrapper {
     max-width: 100%;
