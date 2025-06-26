@@ -237,7 +237,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .home-page {
   width: 100%;
-  padding-top: 40px;
+  // padding-top: 40px;
 }
 
 .image-trail{
@@ -256,12 +256,13 @@ onUnmounted(() => {
 }
 .hero {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 64px);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding:3rem 2rem;
+  justify-content: space-between;
+  padding: 3rem 2rem;
   position: relative;
 }
 
@@ -346,7 +347,7 @@ onUnmounted(() => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: .8rem;
   // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   // border: 1px solid var(--vp-c-divider);
 }
@@ -643,10 +644,6 @@ onUnmounted(() => {
 }
 
 @media screen and (max-width: 640px) {
-  .hero {
-    padding-top: 1rem;
-    height: calc(100vh - 124px);
-  }
   .marquee-wrapper {
     max-width: 100%;
   }

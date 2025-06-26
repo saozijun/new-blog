@@ -2,7 +2,14 @@
   <div class="t-main">
     <div class="t-container" ref="containerRef">
       <div class="list" ref="listRef">
-        <div class="item" v-for="v in 6"></div>
+        <div class="item" v-for="(item, index) in list" :key="index">
+          <video v-if="item.type == 'video'" :src="item.src" muted loop autoplay></video>
+          <img v-else :src="item.src" alt="" />
+        </div>
+      </div>
+      <div class="text" ref="textRef">图片展示</div>
+      <div class="text2" ref="text2Ref">
+        {{ currentText }}
       </div>
     </div>
   </div>
@@ -10,17 +17,39 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
-import { inject } from 'vue'
-const gsap = inject('gsap')
-const props = defineProps({
-  list: {
-    type: Array,
-    default: () => []
-  }
-});
-
+import { inject } from "vue";
+import t1 from "../static/test/t1.mp4";
+import t2 from "../static/test/t2.jpg";
+import t3 from "../static/test/t3.mp4";
+import t4 from "../static/test/t4.jpg";
+import t5 from "../static/test/t5.mp4";
+import t6 from "../static/test/t6.jpg";
+const gsap = inject("gsap");
 const containerRef = ref(null);
 const listRef = ref(null);
+const textRef = ref(null);
+const text2Ref = ref(null);
+const currentText = ref("图1");
+
+let list = [{
+  type: "video",
+  src: t1,
+}, {
+  type: "image",
+  src: t2,
+}, {
+  type: "video",
+  src: t3,
+}, {
+  type: "image",
+  src: t4,
+}, {
+  type: "video",
+  src: t5,
+}, {
+  type: "image",
+  src: t6,
+}];
 
 onMounted(() => {
   nextTick(() => {
@@ -29,23 +58,51 @@ onMounted(() => {
 });
 
 const init = () => {
+  let item = listRef.value.children;
+  let itemWidth = item[1].offsetWidth; // 获取列表项宽度
   // 创建时间轴
   const tl2 = gsap.timeline({
     scrollTrigger: {
       trigger: listRef.value,
       start: "center center",
-      end: "+=2400",
+      end: "+=2800",
       scrub: 1,
       anticipatePin: 1,
       pin: containerRef.value,
       // markers: true, // 调试显示
+      onUpdate: (self) => {
+        const currentX = parseFloat(gsap.getProperty(listRef.value, "x")) || 0;
+        const itemWithGap = itemWidth + 40; // item 宽度 + 间隙
+        const firstItemHalfWidth = itemWidth / 2; // 第一个 item 的一半宽度
+        let currentIndex;
+        // 如果偏移量还未超过第一个 item 的一半，保持索引 0
+        if (Math.abs(currentX) < firstItemHalfWidth) {
+          currentIndex = 0;
+        }
+        // 否则，计算后续索引（减去第一个 item 的一半偏移量）
+        else {
+          currentIndex = Math.min(
+            Math.floor(
+              (Math.abs(currentX) - firstItemHalfWidth) / itemWithGap
+            ) + 1,
+            item.length - 1
+          );
+        }
+
+        currentText.value = `图${currentIndex + 1}`;
+      },
     },
   });
-  let item = listRef.value.children;
-  let itemWidth = item[1].offsetWidth; // 获取列表项宽度
-  tl2.to(item[0], { scale: 1, duration: 0.5}, 0);
-  // 计算平移值 列表项宽度 * 列表项数量 - 盒子之间间隔 * 列表项数量
-  tl2.to(listRef.value, { x: -((item.length - 1) * itemWidth - (item.length - 1) * 40 ) }, 0.54);
+  tl2.to(item[0], { scale: 1, duration: 0.2 }, 0);
+  tl2.to(textRef.value, { scale: 0.5, duration: 0.1 }, 0);
+  tl2.to(textRef.value, { scale: 0.15, y: -350, duration: 0.1 }, 0.1);
+  tl2.to(text2Ref.value, { opacity: 1, y: 50, duration: 0.05 }, 0.15);
+  // 计算平移值 列表项宽度 * 列表项数量 - 盒子之间间隔 * 列表项数量（需要减去一个，不然全部滑过头嘞）
+  tl2.to(
+    listRef.value,
+    { x: -((item.length - 1) * itemWidth + (item.length - 1) * 40) },
+    0.24
+  );
 };
 </script>
 
@@ -54,28 +111,63 @@ const init = () => {
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  margin-top: 180px;
+  margin-top: 240px;
   padding-bottom: 150px;
-  .t-container{
+  .t-container {
     width: 100%;
-    .list{
+    position: relative;
+    .text,
+    .text2 {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 65vh;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16rem;
+      mix-blend-mode: difference;
+    }
+    .text2 {
+      font-size: 2rem;
+      width: 100%;
+      height: 100%;
+      align-items: flex-end;
+      left: 50%;
+      opacity: 0;
+      transform: translate(-50%, 100px);
+    }
+    .list {
+      width: 100%;
+      height: 630px;
       position: relative;
       display: flex;
       align-items: center;
       gap: 40px;
-      .item{
+      .item {
         width: 100%;
         height: 100%;
         border-radius: 10px;
         flex-shrink: 0;
         background: #0000002a;
-        &:nth-child(1){
+        &:nth-child(1) {
           transform: scale(1.7);
+        }
+        video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 10px;
         }
       }
     }
   }
 }
-</style> 
+</style>

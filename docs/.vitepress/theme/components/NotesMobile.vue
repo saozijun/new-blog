@@ -44,8 +44,8 @@ const props = defineProps({
 <style lang="scss" scoped>
 .notes-mobile {
   width: 100%;
-  padding: 1rem;
-  margin-top: 2rem;
+  padding: 2rem;
+  margin-top: 1rem;
 }
 
 .section-title {

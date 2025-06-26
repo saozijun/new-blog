@@ -163,7 +163,7 @@ const init = () => {
       height: 600px;
       border-radius: 15px;
       background-color: var(--vp-c-bg-soft);
-      background: url(../static/note-bg5.png) no-repeat center center;
+      background: url(../static/note-bg.webp) no-repeat center center;
       background-size: cover;
       position: absolute;
       top: 0;
@@ -308,7 +308,7 @@ const init = () => {
       align-items: center;
       pointer-events: none;
       z-index: 111;
-      color: var(--vp-c-text-1); //#9ab6ad
+      color: #9ab6ad; //#9ab6ad
       p {
         font-size: 48px;
         line-height: 1;
@@ -318,7 +318,7 @@ const init = () => {
           color: transparent;
           background-image: linear-gradient(
             180deg,
-            var(--vp-c-text-1) 0%,
+            #9ab6ad 0%,
             transparent 100%
           );
           z-index: -2;
