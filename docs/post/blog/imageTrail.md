@@ -363,3 +363,7 @@ onMounted(() => {
 ```
 
 :::
+
+## 灵感与参考
+
+[React Bits](https://www.reactbits.dev/animations/image-trail) 

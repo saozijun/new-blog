@@ -14,7 +14,7 @@ tags:
 
 # 文字轮播渐入渐出
 
-# 效果展示
+## 效果展示
 
 我的站点酷嘛~ 👉 <FlipWords :words="['酷！酷！酷！','超级酷！', '酷毙了！', '酷到爆了！']" :duration="3000" />
 
@@ -217,3 +217,7 @@ watch(isVisible, (newValue) => {
 ```
 
 :::
+
+## 灵感与参考
+
+[inspira-ui](https://inspira-ui.com/components/text-animations/flip-words) 
