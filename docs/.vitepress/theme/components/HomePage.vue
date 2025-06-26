@@ -289,7 +289,7 @@ onUnmounted(() => {
 
 .sign-box {
   width: 260px;
-  margin: 0 auto 1rem;
+  margin: 0 auto;
 }
 
 .tagline {
