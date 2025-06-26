@@ -111,7 +111,7 @@ const init = () => {
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  margin-top: 240px;
+  margin-top: 280px;
   padding-bottom: 150px;
   .t-container {
     width: 100%;

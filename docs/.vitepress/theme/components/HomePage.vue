@@ -601,18 +601,18 @@ onUnmounted(() => {
   .about-me-card {
     padding: 1.2rem;
   }
+}
+
+@media screen and (max-width: 960px) {
+  .test-container {
+    display: none;
+  }
   .desktop-only {
     display: none;
   }
 
   .mobile-only {
     display: block;
-  }
-}
-
-@media screen and (max-width: 960px) {
-  .test-container {
-    display: none;
   }
   .marquee-wrapper {
     max-width: 100%;
