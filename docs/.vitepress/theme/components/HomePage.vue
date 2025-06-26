@@ -3,12 +3,6 @@
     <div class="image-trail">
       <ImageTrail />
     </div>
-    <div class="scroll-down-indicator">
-      <div class="mouse">
-        <div class="wheel"></div>
-        <div class="scroll-progress" :style="{ height: progressHeight }"></div>
-      </div>
-    </div>
     <header class="hero" data-fades style="--lv: 0">
       <div class="hero-content">
         <div class="sign-box">
@@ -38,29 +32,41 @@
             <h2>关于我</h2>
             <div class="line"></div>
           </div>
-          
+
           <div class="about-me-content">
             <div class="about-me-card">
               <div class="hobby-icons">
-                <div class="hobby-icon" v-for="(hobby, index) in hobbies" :key="index">
+                <div
+                  class="hobby-icon"
+                  v-for="(hobby, index) in hobbies"
+                  :key="index"
+                >
                   <div class="icon-wrapper">
                     <span>{{ hobby.icon }}</span>
                   </div>
                   <span>{{ hobby.name }}</span>
                 </div>
               </div>
-              
+
               <div class="about-me-bio">
                 <p>{{ bio }}</p>
               </div>
-              
+
               <div class="social-links">
-                <a v-for="(social, index) in socials" :key="index" :href="social.link" target="_blank" :title="social.name">
-                  {{social.name}}
+                <a
+                  v-for="(social, index) in socials"
+                  :key="index"
+                  :href="social.link"
+                  target="_blank"
+                  :title="social.name"
+                >
+                  {{ social.name }}
                 </a>
               </div>
               <div>
-                <div style="opacity: .5; font-size: 12px;margin-bottom: 4px;">- 技术栈 -</div>
+                <div style="opacity: 0.5; font-size: 12px; margin-bottom: 4px">
+                  - 技术栈 -
+                </div>
                 <Marquee>
                   <div class="lable-item" v-for="(v, i) in labelList" :key="i">
                     {{ v }}
@@ -71,8 +77,13 @@
           </div>
         </div>
       </div>
+      <div class="page-more">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </header>
-    <div class="max-container">
+    <div class="max-container test-container">
       <Test :list="notes" />
     </div>
     <div class="mobile-only max-container">
@@ -84,7 +95,7 @@
       </ClientOnly>
     </div>
     <div class="content max-container">
-      <p style="font-size: 12px;">tip：笔记还是假数据，调试用滴！</p>
+      <p style="font-size: 12px">tip：笔记还是假数据，调试用滴！</p>
       <div v-if="pvCount && uvCount">
         本站总访问量 {{ pvCount }} - 本站访客数 {{ uvCount }}
       </div>
@@ -180,7 +191,8 @@ const getPv = () => {
 const progressHeight = ref("0px");
 
 const handleScroll = () => {
-  const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const totalScroll =
+    document.documentElement.scrollHeight - window.innerHeight;
   if (totalScroll <= 0) {
     progressHeight.value = "0px";
     return;
@@ -196,15 +208,17 @@ const hobbies = ref([
   { name: "编程", icon: "💻" },
   { name: "动漫", icon: "📖" },
   { name: "音乐", icon: "🎵" },
-  { name: "旅行", icon: "✈️" }
+  { name: "旅行", icon: "✈️" },
 ]);
 
 const socials = ref([
   { name: "blibli", link: "" },
-  { name: "抖音",  link: "" }
+  { name: "抖音", link: "" },
 ]);
 
-const bio = ref("热爱编程与设计的前端开发者，致力于创造美观且实用的网站体验。喜欢探索新技术，分享有趣的发现。闲暇时间喜欢打游戏、听音乐和看动漫。");
+const bio = ref(
+  "热爱编程与设计的前端开发者，致力于创造美观且实用的网站体验。喜欢探索新技术，分享有趣的发现。闲暇时间喜欢打游戏、听音乐和看动漫。"
+);
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -225,6 +239,17 @@ onUnmounted(() => {
   width: 100%;
   padding-top: 40px;
 }
+
+.image-trail{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
 .max-container {
   max-width: 1152px;
   margin: 0 auto;
@@ -235,10 +260,8 @@ onUnmounted(() => {
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding: 3rem 2rem;
-  box-sizing: border-box;
+  padding:3rem 2rem;
   position: relative;
 }
 
@@ -289,18 +312,23 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   margin-bottom: 1.5rem;
-  
+
   h2 {
     margin: 0 1rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: var(--vp-c-text-1);
   }
-  
+
   .line {
     height: 1px;
     flex-grow: 1;
-    background: linear-gradient(90deg, transparent, var(--vp-c-divider), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--vp-c-divider),
+      transparent
+    );
     max-width: 120px;
   }
 }
@@ -335,7 +363,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  
+
   .icon-wrapper {
     width: 50px;
     height: 50px;
@@ -345,12 +373,12 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    
+
     span {
       font-size: 1.5rem;
     }
   }
-  
+
   span {
     font-size: 0.8rem;
     color: var(--vp-c-text-2);
@@ -361,7 +389,7 @@ onUnmounted(() => {
   text-align: center;
   max-width: 650px;
   margin: 0 auto;
-  
+
   p {
     font-size: 0.95rem;
     line-height: 1.6;
@@ -377,7 +405,7 @@ onUnmounted(() => {
     width: 40px;
     font-size: 12px;
     transition: all 0.3s ease;
-    &:hover{
+    &:hover {
       text-decoration: underline !important;
     }
   }
@@ -437,8 +465,9 @@ onUnmounted(() => {
 
 .scroll-down-indicator {
   position: fixed;
-  bottom: 4rem;
-  right: 2%;
+  bottom: 1rem;
+  right: 50%;
+  transform: translateX(50%);
   cursor: pointer;
   z-index: 9999;
 }
@@ -446,8 +475,8 @@ onUnmounted(() => {
 .mouse {
   width: 25px;
   height: 42px;
-  border: 2px solid var(--vp-c-text-2);
-  border-radius: 60px;
+  border: 1px solid var(--vp-c-bg-soft);
+  border-radius: 80px;
   position: relative;
   overflow: hidden;
 }
@@ -455,7 +484,7 @@ onUnmounted(() => {
 .wheel {
   width: 4px;
   height: 10px;
-  background: var(--vp-c-text-2);
+  background: var(--vp-c-bg-soft);
   border-radius: 50px;
   position: absolute;
   top: 8px;
@@ -475,49 +504,83 @@ onUnmounted(() => {
   }
 }
 
-.scroll-progress {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: var(--vp-c-text-2);
-  transition: height 0.1s linear;
-}
-
-// Responsive classes
-.desktop-only {
-  display: block;
-}
-
-.mobile-only {
-  display: none;
-}
-
-.image-trail {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  box-sizing: border-box;
-  height: 40vh;
-  overflow: hidden;
-}
-
-// Media queries for responsive display
-@media screen and (max-width: 768px) {
-  .desktop-only {
-    display: none;
-  }
-
-  .mobile-only {
+.page-more {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--vp-c-text-1);
+  margin-top: 0px;
+  span {
+    content: "";
     display: block;
+    box-sizing: content-box;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0) 50%, transparent 50%);
+    border-bottom: 1px solid var(--vp-c-text-1);
+    border-left: 1px solid var(--vp-c-text-1);
+    transform: rotate(-45deg);
+    animation: arrowMove1 1s infinite;
+    flex-shrink: 0;
+    position: relative;
+
+    &:nth-child(2) {
+      animation: arrowMove2 1s infinite;
+      top: -12px;
+    }
+
+    &:nth-child(3) {
+      animation: arrowMove3 1s infinite;
+      top: -24px;
+    }
   }
-  
+}
+@keyframes arrowMove1 {
+    0% {
+        transform: translateY(0) rotate(-45deg);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: translateY(10px) rotate(-45deg);
+        opacity: 0.6;
+    }
+}
+
+@keyframes arrowMove2 {
+    0% {
+        transform: translateY(0) rotate(-45deg);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(10px) rotate(-45deg);
+        opacity: 0.3;
+    }
+}
+
+@keyframes arrowMove3 {
+    0% {
+        transform: translateY(0) rotate(-45deg);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(10px) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
   .tagline {
     font-size: 1.5rem;
   }
 }
-
+.mobile-only {
+  display: none;
+}
 .gallery-wrapper {
   height: 60vh;
   margin-top: -120px;
@@ -527,6 +590,16 @@ onUnmounted(() => {
 @media screen and (max-width: 1244px) {
   .marquee-wrapper {
     max-width: 100%;
+  }
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+  .test-container {
+    display: none;
   }
 }
 
@@ -550,21 +623,20 @@ onUnmounted(() => {
   .about-me-card {
     padding: 1.2rem;
   }
-  
+
   .hobby-icons {
     gap: 1rem;
   }
-  
+
   .hobby-icon .icon-wrapper {
     width: 40px;
     height: 40px;
   }
-  
+
   .social-links a {
     width: 36px;
-    height: 36px;
   }
-  
+
   .about-me-bio p {
     font-size: 0.9rem;
   }
@@ -581,7 +653,7 @@ onUnmounted(() => {
     font-size: 14px;
   }
   .sign-box {
-    width: 150px;
+    width: 160px;
   }
   .tagline {
     font-size: 1.8rem;
@@ -589,37 +661,35 @@ onUnmounted(() => {
   .about-me-card {
     padding: 1rem;
   }
-  
+
   .hobby-icons {
     gap: 0.8rem;
   }
-  
+
   .hobby-icon .icon-wrapper {
     width: 36px;
     height: 36px;
-    
+
     span {
       font-size: 1.2rem;
     }
   }
-  
+
   .hobby-icon span {
     font-size: 0.7rem;
   }
-  
+
   .social-links {
     gap: 0.8rem;
-    
+
     a {
       width: 32px;
-      height: 32px;
-      
       i {
         font-size: 1rem;
       }
     }
   }
-  
+
   .about-me-bio p {
     font-size: 0.8rem;
   }
