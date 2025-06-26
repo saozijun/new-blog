@@ -111,7 +111,7 @@ const init = () => {
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  margin-top: 280px;
+  margin-top: 240px;
   padding-bottom: 150px;
   .t-container {
     width: 100%;
@@ -168,6 +168,11 @@ const init = () => {
         }
       }
     }
+  }
+}
+@media screen and (max-width: 960px) {
+  .t-main {
+    margin-top: 280px;
   }
 }
 </style>
