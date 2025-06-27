@@ -1,7 +1,7 @@
 ---
 title: 装饰小清单
 description: 看着之前的主题，感觉太丑了，所以准备重新写一个主题，完善中...
-category: 装饰日记
+category: 博客日记
 tags: 
   - 站点记录
   - 博客

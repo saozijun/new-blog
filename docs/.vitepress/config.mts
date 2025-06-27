@@ -58,28 +58,35 @@ export default defineConfig({
       { text: '标签', link: '/tag'},
       { 
         text: '笔记',
-        activeMatch: '/post/blog/',
+        activeMatch: '/post/',
         items: [
-          { text: '装修日记', link: '/post/blog/decoration' },
-          { text: '炫酷组件', link: '/post/blog/loxbe' }
+          { text: '博客记录', link: '/post/blog/decoration' },
+          { text: '炫酷组件', link: '/post/components/loxbe' },
+          { text: '日常记录', link: '/post/daily/cesium' },
         ]
       }
     ],
     siteTitle: false,
     sidebar: {
       "/post/blog/" :[{
-        text: '小破站装修日记',
+        text: '博客记录',
         items: [
           { text: '装修清单', link: '/post/blog/decoration' },
           { text: '站点记录', link: '/post/blog/siteRecords' },
         ]
-      },{
+      }],
+      "/post/components/" :[{
         text: '炫酷组件',
         items: [
-          { text: '小监工', link: '/post/blog/loxbe' },
-          { text: '文字轮播渐入渐出', link: '/post/blog/flipWords' },
-          { text: '图片路径跟随 📷', link: '/post/blog/imageTrail' },
-  
+          { text: '小监工', link: '/post/components/loxbe' },
+          { text: '文字轮播渐入渐出', link: '/post/components/flipWords' },
+          { text: '图片路径跟随 📷', link: '/post/components/imageTrail' },
+        ]
+      }],
+      "/post/daily/" :[{
+        text: '日常记录',
+        items: [
+          { text: 'cesium 探索', link: '/post/daily/cesium' }
         ]
       }]
     },

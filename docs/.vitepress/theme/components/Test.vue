@@ -3,7 +3,7 @@
     <div class="t-container" ref="containerRef">
       <div class="list" ref="listRef">
         <div class="item" v-for="(item, index) in list" :key="index">
-          <video v-if="item.type == 'video'" :src="item.src" muted loop autoplay></video>
+          <video v-if="item.type == 'video'" :src="item.src" muted loop autoplay playsinline></video>
           <img v-else :src="item.src" alt="" />
         </div>
       </div>

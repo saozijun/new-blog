@@ -6,7 +6,6 @@ import ParticlesBg from "./ParticlesBg.vue";
 import Music from "./Music.vue";
 import Lt from "./Lt.vue";
 import NavTitle from "./NavTitle.vue";
-
 toggleDark();
 const { Layout } = DefaultTheme;
 </script>

@@ -2,7 +2,7 @@
 layout: doc
 title: 解锁『小有成就』
 description: 现在的站点已经可以访问了，但是还没有完成装饰，摸鱼装修中！！！
-category: 装饰日记
+category: 博客日记
 tags: 
   - 博客
   - 站点记录

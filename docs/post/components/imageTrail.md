@@ -2,7 +2,7 @@
 layout: doc
 title: 图片路径跟随 📷
 description: 跟随鼠标移动的图片拖尾效果，配置简单，二改非常方便！ 📷
-category: 技术
+category: 组件
 tags:
   - Vue
   - 炫酷组件
