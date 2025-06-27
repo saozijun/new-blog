@@ -16,7 +16,7 @@ tags:
 :::
 
 ## 效果预览
-<img title="Cesium" src="./images/uav.GIF" width="100%">
+<img title="Cesium" src="./images/uav.gif" width="100%">
 
 [预览地址](https://cesium.saozijun.top/)
 
