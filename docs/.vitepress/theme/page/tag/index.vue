@@ -77,6 +77,12 @@ import { ref, onMounted, computed } from 'vue'
 import { data } from '../../utils/post.data'
 import { postsTagData } from '../../utils/post'
 import { useRouter } from 'vitepress';
+import { useData } from 'vitepress'
+
+// params 是一个 Vue ref
+const { params } = useData()
+
+
 let COSURL = import.meta.env.VITE_APP_COS_URL
 const router = useRouter();
 let posts = ref({})
@@ -89,6 +95,7 @@ const selectTag = (tag) => {
 }
 
 onMounted(() => {
+    console.log('params',params.value)
     posts.value = postsTagData(data)
     // 默认选中第一个标签，如果存在的话
     if (Object.keys(posts.value).length > 0) {

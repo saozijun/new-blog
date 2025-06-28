@@ -90,9 +90,7 @@
       <NotesMobile :notes="notes" />
     </div>
     <div class="desktop-only max-container">
-      <ClientOnly>
         <NotesDesktop :notes="notes" />
-      </ClientOnly>
     </div>
     <div class="content max-container">
       <div v-if="pvCount && uvCount">

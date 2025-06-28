@@ -6,7 +6,7 @@
           <p ref="noteT3Ref">最新笔记</p>
           <p ref="noteT5Ref">Latest notes</p>
         </section>
-        <div class="note-box-inner" ref="noteBoxInnerRef">
+        <div  class="note-box-inner" ref="noteBoxInnerRef">
           <div v-for="note in notes" :key="note.id">
             <div class="note-item" v-if="note" @click="goPost(note.url)">
               <div class="note-image">

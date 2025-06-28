@@ -14,20 +14,14 @@ const { Layout } = DefaultTheme;
   <!-- <ParticlesBg /> -->
   <Layout>
     <template #nav-bar-title-after>
-      <ClientOnly>
-        <NavTitle />
-      </ClientOnly>
+      <NavTitle />
     </template>
     <template #layout-bottom>
-      <ClientOnly>
-        <!-- <Music /> -->
+        <Music />
         <SplashCursor />
-      </ClientOnly>
     </template>
     <template #aside-outline-before>
-      <ClientOnly>
         <Lt />
-      </ClientOnly>
     </template>
   </Layout>
 </template>
