@@ -18,7 +18,7 @@ tags:
 ## 效果预览
 <img title="Cesium" src="./images/uav.gif" width="100%">
 
-[预览地址](https://cesium.saozijun.top/)
+[预览-传送阵](https://cesium.saozijun.top/)
 
 ## 1. 注册 Cesium 
 Cesium 使用是要token，所以需要注册一个账号。注册 Cesium 官网：[Cesium](https://cesium.com/)
@@ -38,7 +38,7 @@ cesium 地图默认是英文语言
 
 里面有很多免费的底图选择
 
-## 4. 不多bb，可查看完整页面代码
+## 4. 不多bb，直接查看完整页面代码
 
 ::: details 点我查看组件代码
 
