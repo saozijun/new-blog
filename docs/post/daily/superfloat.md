@@ -4,12 +4,7 @@ title: "GSAP帧序列动画"
 description: "通过Python生成帧序列与GSAP滚动动画，滚动驱动帧序列展示"
 category: 技术笔记
 tags:
-  - 前端动画
   - GSAP
-  - Python
-  - 视频处理
-  - 游戏技巧
-  - Vue
 ---
 
 # GSAP帧序列：记录下我滴超极漂

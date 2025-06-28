@@ -3,6 +3,7 @@ layout: doc
 title: cesium 探索
 description: 通过 Cesium 实现无人机航线飞行的练习案例。包含飞行航线模拟。
 category: 日常记录
+firstCommit: 2024-12-30
 tags:
   - 地图
   - Cesium

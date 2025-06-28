@@ -5,40 +5,44 @@
       <p>Latest notes</p>
     </div>
     <div class="notes-list">
-      <div v-for="note in notes" :key="note.id" class="note-card">
+      <div v-for="note in notes" :key="note.id" class="note-card" @click="goPost(note.url)">
         <div class="note-image">
-          <img :src="note.image" :alt="note.title" data-no-fancybox />
+          <img src="../static/note-bg3.jpg" :alt="note.title" data-no-fancybox />
         </div>
-        <div class="note-content">
+        <div class="note-content" v-if="note">
           <h3 class="note-title">{{ note.title }}</h3>
-          <p class="note-description">{{ note.description }}</p>
+          <p class="note-description">{{ note.abstract }}</p>
           <div class="note-meta">
             <div class="note-tags">
-              <span v-for="tag in note.tags" :key="tag" class="note-tag">{{
+              <span v-for="tag in note.tags" :key="tag" class="note-tag"># {{
                 tag
               }}</span>
             </div>
-            <p class="note-update-date">{{ note.updateDate }}</p>
+            <p class="note-update-date">{{ note.dateText[0] }}</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="notes-footer">
-      <p>最近更新时间：2025-06-23</p>
-      <ButtonText text="查看更多" />
+    <div class="notes-footer" v-if="notes.length">
+      <p>最近更新时间：{{ notes[0].dateText[0] }}</p>
+      <ButtonText text="查看更多"  @click="goPost('/archive')"  />
     </div>
   </div>
 </template>
 
 <script setup>
 import ButtonText from "./ButtonText.vue";
-
+import { useRouter } from 'vitepress'
+const router = useRouter()
 const props = defineProps({
   notes: {
     type: Array,
     default: () => []
   }
 });
+const goPost = (url) => {
+  router.go(url)
+}
 </script>
 
 <style lang="scss" scoped>

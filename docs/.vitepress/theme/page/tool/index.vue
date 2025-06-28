@@ -3,7 +3,7 @@
         <div class="page-header" data-fade style="--lv: 0;">
             <div>
                 <h1 class="page-title">工具箱</h1>
-                <div class="tool-stats">实用工具集合，持续添加中...</div>
+                <div class="tool-stats">收录一些我常用的工具，持续添加中...</div>
             </div>
             <img src="../../static/xiaoxin/bixin.png" alt="">
         </div>

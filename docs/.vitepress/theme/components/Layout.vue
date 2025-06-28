@@ -20,7 +20,7 @@ const { Layout } = DefaultTheme;
     </template>
     <template #layout-bottom>
       <ClientOnly>
-        <Music />
+        <!-- <Music /> -->
         <SplashCursor />
       </ClientOnly>
     </template>

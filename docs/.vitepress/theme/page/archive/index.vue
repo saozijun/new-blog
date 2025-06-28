@@ -4,7 +4,7 @@
             <div>
                 <h1 class="page-title">全部文章</h1>
                 <div class="post-stats">共计 {{ postLength }} 篇文章</div>
-                <p style="font-size: 12px;">tip：目前是假数据啦,数据太少了不好调试,先用假数据。标签页是真数据！</p>
+                <p style="font-size: 12px;">tip: 2024年份是我调试滴,都是2025产出!</p>
             </div>
             <img data-no-fancybox src="../../static/xiaoxin/notes.png" alt="">
         </div>
@@ -157,13 +157,12 @@ const useMockData = () => {
 
 onMounted(() => {
   posts.value = postsYearData(data)
-//   getPost()
-//   getPostLength()
-  useMockData()
+  getPost()
+  getPostLength()
+//   useMockData()
 })
 
 const goPost = (url) => {
-    return
   router.go(url)
 }
 </script>

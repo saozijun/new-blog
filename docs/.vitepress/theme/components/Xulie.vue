@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { inject } from "vue";
 
 // 动态导入图片资源
@@ -25,11 +25,27 @@ const context = ref(null);
 const images = ref([]);
 const totalFrames = ref(29); 
 const imageSeq = ref({ frame: 0 });
+const scrollTriggerInstance = ref(null);
 
 onMounted(() => {
   nextTick(() => {
     init();
   });
+});
+
+onUnmounted(() => {
+  // 清除 ScrollTrigger 实例
+  if (scrollTriggerInstance.value) {
+    scrollTriggerInstance.value.kill();
+  }
+  
+  // 清除图片资源
+  images.value = [];
+  
+  // 清除 canvas
+  if (context.value && canvasRef.value) {
+    context.value.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height);
+  }
 });
 
 /**
@@ -88,7 +104,7 @@ const init = async () => {
   
   renderCanvas();
   
-  gsap.to(imageSeq.value, {
+  const animation = gsap.to(imageSeq.value, {
     frame: totalFrames.value - 1,
     snap: "frame", // 确保帧数为整数
     ease: "none",
@@ -100,6 +116,9 @@ const init = async () => {
     },
     onUpdate: renderCanvas
   });
+  
+  // 保存 ScrollTrigger 实例以便在组件卸载时清除
+  scrollTriggerInstance.value = animation.scrollTrigger;
 };
 </script>
 

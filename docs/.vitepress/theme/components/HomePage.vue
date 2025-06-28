@@ -83,7 +83,7 @@
         <span></span>
       </div>
     </header>
-    <div class="max-container test-container">
+    <div class="test-container">
       <Test :list="notes" />
     </div>
     <div class="mobile-only max-container">
@@ -95,7 +95,6 @@
       </ClientOnly>
     </div>
     <div class="content max-container">
-      <p style="font-size: 12px">tip：笔记还是假数据，调试用滴！</p>
       <div v-if="pvCount && uvCount">
         本站总访问量 {{ pvCount }} - 本站访客数 {{ uvCount }}
       </div>
@@ -116,58 +115,11 @@ import NotesMobile from "./NotesMobile.vue";
 import Test from "./Test.vue";
 
 import { ref, onMounted, nextTick, onUnmounted } from "vue";
-import bgImage from "../static/note-bg3.jpg";
-const notes = ref([
-  {
-    id: 1,
-    title: "探索VitePress的奥秘",
-    description: "VitePress 是一个基于 Vite 和 Vue 的静态站点生成器...",
-    tags: ["VitePress", "Vue"],
-    image: bgImage,
-    updateDate: "2024-07-21",
-  },
-  {
-    id: 2,
-    title: "深入理解GSAP动画",
-    description:
-      "GSAP (GreenSock Animation Platform) 是一个功能强大的JavaScript动画库...",
-    tags: ["GSAP", "Animation"],
-    image: bgImage,
-    updateDate: "2024-07-22",
-  },
-  {
-    id: 3,
-    title: "Vue 3 Composition API实践",
-    description: "Composition API 是 Vue 3 的核心特性之一...",
-    tags: ["Vue 3", "Composition API"],
-    image: bgImage,
-    updateDate: "2024-07-23",
-  },
-  {
-    id: 4,
-    title: "用SCSS创造优雅的样式",
-    description: "SCSS 是一个成熟、稳定且功能强大的专业级 CSS 扩展语言...",
-    tags: ["SCSS", "CSS"],
-    image: bgImage,
-    updateDate: "2024-07-24",
-  },
-  {
-    id: 5,
-    title: "React Hooks全面指南",
-    description: "React Hooks 是 React 16.8 引入的新特性...",
-    tags: ["React", "Hooks"],
-    image: bgImage,
-    updateDate: "2024-07-25",
-  },
-  {
-    id: 6,
-    title: "Node.js后端开发入门",
-    description: "Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行时...",
-    tags: ["Node.js", "Backend"],
-    image: bgImage,
-    updateDate: "2024-07-26",
-  },
-]);
+import { data } from "../utils/post.data";
+import { useRouter } from 'vitepress';
+
+const router = useRouter();
+const notes = ref([]);
 const labelList = ref([
   "CSS",
   "HTML",
@@ -221,8 +173,16 @@ const bio = ref(
   "热爱编程与设计的前端开发者，致力于创造美观且实用的网站体验。喜欢探索新技术，分享有趣的发现。闲暇时间喜欢打游戏、听音乐和看动漫。"
 );
 
+// 获取最新的6篇文章
+const getLatestPosts = () => {
+  if (data && data.length) {
+    notes.value = data.slice(0, 6)
+  }
+};
+
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  getLatestPosts();
   nextTick(async () => {
     setTimeout(() => {
       getPv();
@@ -245,7 +205,7 @@ onUnmounted(() => {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 40vh;
   overflow: hidden;
   box-sizing: border-box;
@@ -254,6 +214,10 @@ onUnmounted(() => {
 .max-container {
   max-width: 1152px;
   margin: 0 auto;
+}
+.test-container {
+  width: 100%;
+  overflow: hidden;
 }
 .hero {
   width: 100%;

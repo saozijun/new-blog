@@ -109,6 +109,7 @@ const init = () => {
 <style lang="scss" scoped>
 .t-main {
   width: 100%;
+  max-width: 1152px;
   margin: 0 auto;
   box-sizing: border-box;
   margin-top: 240px;

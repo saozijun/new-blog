@@ -8,32 +8,32 @@
         </section>
         <div class="note-box-inner" ref="noteBoxInnerRef">
           <div v-for="note in notes" :key="note.id">
-            <div class="note-item">
+            <div class="note-item" v-if="note" @click="goPost(note.url)">
               <div class="note-image">
-                <img :src="note.image" :alt="note.title" data-no-fancybox />
+                <img src="../static/note-bg3.jpg" :alt="note.title" data-no-fancybox />
               </div>
               <div class="note-content">
                 <h3 class="note-title">{{ note.title }}</h3>
-                <p class="note-description">{{ note.description }}</p>
+                <p class="note-description">{{ note.abstract }}</p>
                 <div class="note-meta">
                   <div class="note-tags">
                     <span
                       v-for="tag in note.tags"
                       :key="tag"
                       class="note-tag"
-                      >{{ tag }}</span
+                      >#{{ tag }}</span
                     >
                   </div>
-                  <p class="note-update-date">{{ note.updateDate }}</p>
+                  <p class="note-update-date">{{ note.dateText[0] }}</p>
                 </div>
               </div>
             </div>
             <div class="note-item-bg"></div>
           </div>
         </div>
-        <div class="note-box-footer" ref="noteBoxFooterRef">
-          <p>最近更新时间：2025-06-23</p>
-          <ButtonText text="查看更多" />
+        <div class="note-box-footer" ref="noteBoxFooterRef" v-if="notes.length">
+          <p>最近更新时间：{{ notes[0].dateText[0] }}</p>
+          <ButtonText text="查看更多" @click="goPost('/archive')" />
         </div>
       </div>
     </div>
@@ -44,6 +44,7 @@
 import ButtonText from "./ButtonText.vue";
 import { ref, onMounted, nextTick } from "vue";
 import { inject } from 'vue'
+import { useRouter } from 'vitepress'
 import noteBg3 from "../static/xiaoxin/bixin.png";
 import noteBg4 from "../static/xiaoxin/notes.png";
 const gsap = inject('gsap')
@@ -53,7 +54,7 @@ const props = defineProps({
     default: () => []
   }
 });
-
+const router = useRouter()
 const noteRef = ref(null);
 const noteBoxRef = ref(null);
 const noteTitleRef = ref(null);
@@ -97,11 +98,11 @@ const init = () => {
     .to(noteBoxInnerRef.value, { height: 310, duration: 3.5 }, 0.5)
   // 使用循环为每个笔记项添加动画
   const positions = [
-    { x: 440, y: 0 },
     { x: -440, y: 0 },
+    { x: 440, y: 0 },
     { x: 0, y: 0 },
-    { x: 440, y: 260 },
     { x: -440, y: 260 },
+    { x: 440, y: 260 },
     { x: 0, y: 260 },
   ];
 
@@ -141,6 +142,10 @@ const init = () => {
     .to(noteBoxInnerRef.value, { background: "#0000", duration: 3 }, 5)
     .to({}, { duration: 3 }, 10);
 };
+
+const goPost = (url) => {
+  router.go(url)
+}
 </script>
 
 <style lang="scss" scoped>
