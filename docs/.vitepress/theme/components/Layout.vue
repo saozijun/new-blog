@@ -11,7 +11,7 @@ const { Layout } = DefaultTheme;
 </script>
 
 <template>
-  <ParticlesBg />
+  <!-- <ParticlesBg /> -->
   <Layout>
     <template #nav-bar-title-after>
       <ClientOnly>

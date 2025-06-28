@@ -14,7 +14,7 @@
             >嘘
             <img
               style="display: inline-block; position: relative; top: 6px"
-              src="../static/xu.png"
+              src="https://blog-1256565862.cos.ap-guangzhou.myqcloud.com/blog/xu.png"
               width="20px"
               alt=""
               data-no-fancybox

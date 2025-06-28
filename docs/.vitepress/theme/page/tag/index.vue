@@ -5,7 +5,7 @@
                 <h1 class="page-title">标签列表</h1>
                 <div class="post-stats">共计 {{ tagCount }} 个标签</div>
             </div>
-            <img data-no-fancybox src="../../static/xiaoxin/notes.png" alt="">
+            <img data-no-fancybox :src="COSURL + '/blog/xiaoxin/notes.png'" alt="">
         </div>
         
         <div class="tag-container">
@@ -27,7 +27,7 @@
             <div class="post-container" v-if="currentTag">
                 <div class="tag-header">
                     <div class="current-tag"  data-fade style="--lv: 2;">
-                        <img data-no-fancybox src="../../static/xiaoxin/launch.png" alt="">
+                        <img data-no-fancybox :src="COSURL + '/blog/xiaoxin/launch.png'" alt="">
                         <span class="tag-label"># {{ currentTag }}</span>
                     </div>
                     <div  data-fade style="--lv: 2;" class="tag-post-count">{{ posts[currentTag].length }} 篇文章</div>
@@ -77,7 +77,7 @@ import { ref, onMounted, computed } from 'vue'
 import { data } from '../../utils/post.data'
 import { postsTagData } from '../../utils/post'
 import { useRouter } from 'vitepress';
-
+let COSURL = import.meta.env.VITE_APP_COS_URL
 const router = useRouter();
 let posts = ref({})
 let currentTag = ref('')

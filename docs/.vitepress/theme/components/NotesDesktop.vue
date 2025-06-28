@@ -10,7 +10,7 @@
           <div v-for="note in notes" :key="note.id">
             <div class="note-item" v-if="note" @click="goPost(note.url)">
               <div class="note-image">
-                <img src="../static/note-bg3.jpg" :alt="note.title" data-no-fancybox />
+                <img :src="COSURL + 'blog/note-bg3.jpg'" :alt="note.title" data-no-fancybox />
               </div>
               <div class="note-content">
                 <h3 class="note-title">{{ note.title }}</h3>
@@ -45,8 +45,7 @@ import ButtonText from "./ButtonText.vue";
 import { ref, onMounted, nextTick } from "vue";
 import { inject } from 'vue'
 import { useRouter } from 'vitepress'
-import noteBg3 from "../static/xiaoxin/bixin.png";
-import noteBg4 from "../static/xiaoxin/notes.png";
+let COSURL = import.meta.env.VITE_APP_COS_URL
 const gsap = inject('gsap')
 const props = defineProps({
   notes: {
@@ -54,6 +53,8 @@ const props = defineProps({
     default: () => []
   }
 });
+let noteBg3 = COSURL + '/blog/xiaoxin/bixin.png'
+let noteBg4 = COSURL + '/blog/xiaoxin/notes.png'
 const router = useRouter()
 const noteRef = ref(null);
 const noteBoxRef = ref(null);
@@ -168,7 +169,7 @@ const goPost = (url) => {
       height: 600px;
       border-radius: 15px;
       background-color: var(--vp-c-bg-soft);
-      background: url(../static/note-bg.webp) no-repeat center center;
+      background: url(https://blog-1256565862.cos.ap-guangzhou.myqcloud.com/blog/note-bg8.jpg) no-repeat center center;
       background-size: cover;
       position: absolute;
       top: 0;
@@ -314,10 +315,12 @@ const goPost = (url) => {
       pointer-events: none;
       z-index: 111;
       color: #9ab6ad; //#9ab6ad
+      mix-blend-mode: difference;
       p {
         font-size: 48px;
         line-height: 1;
         margin: 0;
+        
         &:nth-child(2) {
           opacity: 0.5;
           color: transparent;

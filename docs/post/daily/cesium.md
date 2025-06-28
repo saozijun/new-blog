@@ -17,7 +17,7 @@ tags:
 :::
 
 ## 效果预览
-<img title="Cesium" src="./images/uav.gif" width="100%">
+<img title="Cesium" src="https://blog-1256565862.cos.ap-guangzhou.myqcloud.com/blog/uav.gif" width="100%">
 
 [预览-传送阵](https://cesium.saozijun.top/)
 
@@ -39,7 +39,7 @@ cesium 地图默认是英文语言
 
 里面有很多免费的底图选择
 
-## 4. 不多bb，直接查看完整页面代码
+## 4. 查看完整页面代码
 
 ::: details 点我查看组件代码
 

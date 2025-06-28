@@ -6,7 +6,7 @@
                 <div class="post-stats">共计 {{ postLength }} 篇文章</div>
                 <p style="font-size: 12px;">tip: 2024年份是我调试滴,都是2025产出!</p>
             </div>
-            <img data-no-fancybox src="../../static/xiaoxin/notes.png" alt="">
+            <img data-no-fancybox :src="COSURL + '/blog/xiaoxin/notes.png'" alt="">
         </div>
         
         <div class="timeline" data-fade style="--lv: 1;">
@@ -16,7 +16,7 @@
                     <div class="post-count">{{ yearItem.posts.length }} 篇</div>
                 </div>
                 <div class="sticky-year">
-                    <img data-no-fancybox src="../../static/xiaoxin/launch.png" alt="">
+                    <img data-no-fancybox :src="COSURL + '/blog/xiaoxin/launch.png'" alt="">
                     {{ yearItem.title }}
                 </div>
                 <div class="post-list" data-fades style="--lv: 3;">
@@ -59,6 +59,7 @@ import { ref, onMounted } from 'vue'
 import { data } from '../../utils/post.data'
 import { postsYearData } from '../../utils/post'
 import { useRouter } from 'vitepress';
+let COSURL = import.meta.env.VITE_APP_COS_URL
 const router = useRouter();
 
 let postLength = ref(0)

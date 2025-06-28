@@ -1,7 +1,11 @@
 <template>
   <div class="main">
     <div ref="containerRef" class="sequence-container">
-      <canvas ref="canvasRef" class="sequence-canvas"></canvas>
+      <div v-if="loading" class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">加载中 {{ loadingProgress }}%</div>
+      </div>
+      <canvas v-show="!loading" ref="canvasRef" class="sequence-canvas"></canvas>
     </div>
   </div>
 </template>
@@ -10,11 +14,13 @@
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { inject } from "vue";
 
+let COSURL = import.meta.env.VITE_APP_COS_URL
+
 // 动态导入图片资源
-const imagesList = Array.from({ length: 29 }, (_, i) => {
+const imagesList = Array.from({ length: 44 }, (_, i) => {
   const index = i + 1;
   const formattedIndex = `00${index}`;
-  return new URL(`../static/xulie/${formattedIndex}.jpg`, import.meta.url).href;
+  return `${COSURL}blog/xulie/${formattedIndex}.jpg`;
 });
 
 const gsap = inject("gsap");
@@ -23,9 +29,11 @@ const containerRef = ref(null);
 const canvasRef = ref(null);
 const context = ref(null);
 const images = ref([]);
-const totalFrames = ref(29); 
+const totalFrames = ref(44); 
 const imageSeq = ref({ frame: 0 });
 const scrollTriggerInstance = ref(null);
+const loading = ref(true);
+const loadingProgress = ref(0);
 
 onMounted(() => {
   nextTick(() => {
@@ -53,12 +61,21 @@ onUnmounted(() => {
  */
 const loadImages = async () => {
   const loadedImages = [];
-  for (let i = 0; i < imagesList.length; i++) {
+  const totalImages = imagesList.length;
+  let loadedCount = 0;
+  
+  for (let i = 0; i < totalImages; i++) {
     const img = new Image();
     img.src = imagesList[i];
     await new Promise(resolve => {
-      img.onload = resolve;
+      img.onload = () => {
+        loadedCount++;
+        loadingProgress.value = Math.floor((loadedCount / totalImages) * 100);
+        resolve();
+      };
       img.onerror = () => {
+        loadedCount++;
+        loadingProgress.value = Math.floor((loadedCount / totalImages) * 100);
         resolve();
       };
     });
@@ -68,6 +85,7 @@ const loadImages = async () => {
   }
   
   images.value = loadedImages;
+  loading.value = false;
   return loadedImages;
 };
 
@@ -136,6 +154,31 @@ const init = async () => {
     align-items: flex-start;
     position: relative;
     
+    .loading-container {
+      position: sticky;
+      top: 50vh;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--vp-c-brand);
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      .loading-text {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #666;
+      }
+    }
+    
     .sequence-canvas {
       position: sticky;
       top: 50vh;
@@ -145,5 +188,9 @@ const init = async () => {
       object-fit: contain;
     }
   }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 </style>
