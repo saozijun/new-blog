@@ -86,7 +86,8 @@ export default defineConfig({
       "/post/daily/" :[{
         text: '日常记录',
         items: [
-          { text: 'cesium 探索', link: '/post/daily/cesium' }
+          { text: 'cesium 探索', link: '/post/daily/cesium' },
+          { text: 'GSAP帧序列动画', link: '/post/daily/superfloat' }
         ]
       }]
     },

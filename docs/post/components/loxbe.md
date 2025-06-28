@@ -11,7 +11,6 @@ tags:
 <script setup>
     import Loxbe from '../../.vitepress/theme/components/Loxbe.vue'
 </script>
-
 # 我的小监工组件
 
 ## 🙂 小监工展示

@@ -114,6 +114,7 @@ import ImageTrail from "./ImageTrail.vue";
 import NotesDesktop from "./NotesDesktop.vue";
 import NotesMobile from "./NotesMobile.vue";
 import Test from "./Test.vue";
+
 import { ref, onMounted, nextTick, onUnmounted } from "vue";
 import bgImage from "../static/note-bg3.jpg";
 const notes = ref([
