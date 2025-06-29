@@ -81,15 +81,15 @@ onMounted(() => {
   border-radius: 50%;
   box-shadow: var(--vp-shadow-3);
 
-  background-color: var(--vp-c-bg-soft-alpha);
-  @supports (backdrop-filter: blur(8px)) {
-    backdrop-filter: blur(8px);
-  }
-
   opacity: 0;
   transform: scale(0.8) translateY(20px);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  
+  background-color: var(--vp-c-bg-soft-alpha);
+  @supports (backdrop-filter: blur(8px)) {
+    backdrop-filter: blur(8px);
+  }
 
   &.show {
     opacity: 1;

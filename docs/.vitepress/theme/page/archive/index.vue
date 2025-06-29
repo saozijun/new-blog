@@ -4,7 +4,6 @@
             <div>
                 <h1 class="page-title">全部文章</h1>
                 <div class="post-stats">共计 {{ postLength }} 篇文章</div>
-                <p style="font-size: 12px;">tip: 2024年份是我调试滴,都是2025产出!</p>
             </div>
             <img data-no-fancybox :src="COSURL + '/blog/xiaoxin/notes.png'" alt="">
         </div>
@@ -187,7 +186,7 @@ const goPost = (url) => {
     }
     .page-title {
         font-size: 2.8rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
         letter-spacing: -0.02em;
     }
     
