@@ -329,3 +329,21 @@
 .vp-doc h3 {
   margin: 1.6rem 0 1rem 0;
 }
+.custom-block.tip{
+  background-color: var(--vp-code-line-diff-add-color);
+}
+
+
+#nprogress .bar {
+  background: var(--vp-c-brand) !important;
+  opacity: 0.8 !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--vp-c-brand), 0 0 5px var(--vp-c-brand) !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--vp-c-brand);
+  border-left-color: var(--vp-c-brand);
+}

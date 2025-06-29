@@ -6,7 +6,8 @@ import Sign from "./components/Sign.vue"
 import Message from './utils/message'
 import busuanzi from 'busuanzi.pure.js'
 import gsap from 'gsap'
-
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import 'virtual:group-icons.css'
 import { bindFancybox, destroyFancybox } from './utils/ImgViewer' // 图片查看器
 import './style/custom.scss'
@@ -31,11 +32,14 @@ export default {
       app.provide('gsap', gsap)
       // 提供 Message 给组件使用
       app.provide('message', Message)
+      console.log('router',router);
       
       router.onBeforeRouteChange = () => {
+        NProgress.start()
         destroyFancybox() // 销毁图片查看器
       }
       router.onAfterRouteChange = () => {
+        NProgress.done()
         bindFancybox() // 绑定图片查看器
         busuanzi.fetch()
       }

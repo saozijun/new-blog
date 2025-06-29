@@ -2,16 +2,17 @@
 import DefaultTheme from "vitepress/theme";
 import { toggleDark } from "../utils/Dark";
 import SplashCursor from "./SplashCursor.vue";
-// import ParticlesBg from "./ParticlesBg.vue";
+import Progress from "./Progress.vue";
 import Music from "./Music.vue";
 import Lt from "./Lt.vue";
 import NavTitle from "./NavTitle.vue";
+
 toggleDark();
 const { Layout } = DefaultTheme;
 </script>
 
 <template>
-  <!-- <ParticlesBg /> -->
+  <Progress />
   <Layout>
     <template #nav-bar-title-after>
       <ClientOnly>
