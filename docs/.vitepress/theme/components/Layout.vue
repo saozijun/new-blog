@@ -11,17 +11,17 @@ const { Layout } = DefaultTheme;
 </script>
 
 <template>
-  <!-- <ParticlesBg /> -->
+  <ParticlesBg />
   <Layout>
     <template #nav-bar-title-after>
       <NavTitle />
     </template>
     <template #layout-bottom>
-        <Music />
-        <SplashCursor />
+      <Music />
+      <SplashCursor />
     </template>
     <template #aside-outline-before>
-        <Lt />
+      <Lt />
     </template>
   </Layout>
 </template>
