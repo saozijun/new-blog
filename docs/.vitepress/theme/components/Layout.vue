@@ -2,7 +2,7 @@
 import DefaultTheme from "vitepress/theme";
 import { toggleDark } from "../utils/Dark";
 import SplashCursor from "./SplashCursor.vue";
-import ParticlesBg from "./ParticlesBg.vue";
+// import ParticlesBg from "./ParticlesBg.vue";
 import Music from "./Music.vue";
 import Lt from "./Lt.vue";
 import NavTitle from "./NavTitle.vue";
@@ -11,10 +11,12 @@ const { Layout } = DefaultTheme;
 </script>
 
 <template>
-  <ParticlesBg />
+  <!-- <ParticlesBg /> -->
   <Layout>
     <template #nav-bar-title-after>
-      <NavTitle />
+      <ClientOnly>
+        <NavTitle />
+      </ClientOnly>
     </template>
     <template #layout-bottom>
       <Music />
