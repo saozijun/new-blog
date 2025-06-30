@@ -1,7 +1,7 @@
 <template>
     <div class="title">
         <img width="50px" :src="isDark ? wSign : sign" alt="" />
-        <img width="30px" style="position: relative; top: -2px" src="../static/xiaoxin.gif" alt="" />
+        <!-- <img width="30px" style="position: relative; top: -2px" src="../static/xiaoxin.gif" alt="" /> -->
     </div>
 </template>
 

@@ -4,7 +4,7 @@
     :class="{ 'show': showProgress }"
     @click="scrollToTop"
   >
-    <svg class="progress-circle" width="50" height="50" viewBox="0 0 50 50">
+    <svg class="progress-circle" width="40" height="40" viewBox="0 0 50 50">
       <circle class="progress-bg" cx="25" cy="25" r="22.5" />
       <circle
         ref="progressFill"
@@ -67,10 +67,10 @@ onMounted(() => {
 <style lang="scss" scoped>
 .progress-to-top {
   position: fixed;
-  right: 2rem;
-  bottom: 2rem;
-  width: 40px;
-  height: 40px;
+  right: 1rem;
+  bottom: 1.5rem;
+  width: 30px;
+  height: 30px;
   z-index: 100;
   cursor: pointer;
 
@@ -122,15 +122,11 @@ onMounted(() => {
 }
 
 .arrow-icon {
-  width: 22px;
-  height: 22px;
+  width: 15px;
+  height: 15px;
   stroke: var(--vp-c-brand-1);
   stroke-width: 2;
   fill: none;
   transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.progress-to-top:hover .arrow-icon {
-  transform: translateY(-3px);
 }
 </style>

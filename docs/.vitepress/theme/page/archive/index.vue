@@ -2,7 +2,7 @@
     <div class="archive-page">
         <div class="page-header" data-fade style="--lv: 0;">
             <div>
-                <h1 class="page-title">全部文章</h1>
+                <h1 class="page-title">文章归档</h1>
                 <div class="post-stats">共计 {{ postLength }} 篇文章</div>
             </div>
             <img data-no-fancybox :src="COSURL + '/blog/xiaoxin/notes.png'" alt="">
@@ -229,7 +229,7 @@ const goPost = (url) => {
         color: var(--vp-c-brand);
         padding: 4px 10px;
         border-radius: 8px;
-        margin-left: -46.5px;
+        margin-left: -38px;
         width: fit-content;
         z-index: 5;
         writing-mode: vertical-lr;
@@ -424,7 +424,7 @@ const goPost = (url) => {
     @media (max-width: 768px) {
         padding: 2rem 1rem;
         .sticky-year{
-            margin-left: -49.5px;
+            margin-left: -42px;
         }
         .year-section {
             padding-left: 2.5rem;
