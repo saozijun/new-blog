@@ -32,8 +32,6 @@ export default {
       app.provide('gsap', gsap)
       // 提供 Message 给组件使用
       app.provide('message', Message)
-      console.log('router',router);
-      
       router.onBeforeRouteChange = () => {
         NProgress.start()
         destroyFancybox() // 销毁图片查看器

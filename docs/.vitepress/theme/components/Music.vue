@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import "aplayer/dist/APlayer.min.css";
 import { onMounted, ref, nextTick, onBeforeUnmount } from "vue";
-import { playlist, songUrl, lyric } from "../api/search";
 import { inBrowser } from "vitepress";
+import staticMusicList from "../utils/music";
 
 // 类型定义
 interface Track {
@@ -33,43 +33,6 @@ const ap = ref<APlayerInstance | null>(null);
 const isShown = ref<boolean>(false);
 const audioList = ref<Track[]>([]);
 
-// 辅助函数
-const combineTracksWithUrls = (tracks: Track[], urlData: any[]): Track[] => {
-  return tracks.map((track) => {
-    const data = urlData.find((i) => track.id === i.id);
-    return {
-      ...track,
-      url: data ? data.url : "",
-    };
-  });
-};
-
-const createTrackList = (playlistData: any): Track[] => {
-  const tracks = playlistData.tracks || [];
-  return tracks.map((track: any) => ({
-    id: track.id,
-    name: track.name,
-    artist: track.ar[0].name,
-    url: "",
-    cover: track.al.picUrl,
-    lrc: "",
-  }));
-};
-
-const getTrackIds = (tracks: Track[]): string => {
-  return tracks.map((track) => track.id).join(",");
-};
-
-const fetchLyrics = async (trackId: number): Promise<string> => {
-  try {
-    const response: any = await lyric({ id: trackId });
-    return response.lrc?.lyric || "";
-  } catch (error) {
-    console.error("获取歌词失败:", error);
-    return "";
-  }
-};
-
 const initializePlayer = async (tracks: Track[]) => {
   if (!inBrowser || !tracks.length || !tracks[0].url) return;
   
@@ -84,7 +47,7 @@ const initializePlayer = async (tracks: Track[]) => {
       audio: tracks,
       fixed: true,
       autoplay: false,
-      lrcType: 2,
+      lrcType: 1,
       theme: "#47ba86",
     });
     
@@ -111,7 +74,7 @@ const setupEventListeners = () => {
 };
 
 const handleCanPlay = () => {
-  fetchCurrentTrackLyrics();
+  // 静态数据已经包含歌词，不需要再获取
 };
 
 const handlePlayError = () => {
@@ -136,52 +99,15 @@ const handleResize = () => {
   nextTick(updatePlayerPosition);
 };
 
-const fetchCurrentTrackLyrics = async () => {
-  if (!ap.value || !audioList.value.length) return;
-  
-  const currentTrack = audioList.value.find(
-    track => track.url === ap.value?.audio.src
-  );
-  
-  if (!currentTrack || currentTrack.lrc !== "") return;
-  
-  const trackIndex = audioList.value.indexOf(currentTrack);
-  if (trackIndex === -1) return;
-  
-  currentTrack.lrc = await fetchLyrics(currentTrack.id);
-  
-  // 更新播放器歌词
-  ap.value.list.clear();
-  ap.value.list.add([...audioList.value]);
-  ap.value.list.switch(trackIndex);
-  ap.value.play();
-};
-
 // 生命周期钩子
 onMounted(async () => {
   try {
-    // 获取播放列表数据
-    const res: any = await playlist();
-    const trackList = createTrackList(res.playlist);
-    
-    // 获取第一首歌曲的歌词
-    const firstTrackId = trackList[0]?.id;
-    if (firstTrackId) {
-      trackList[0].lrc = await fetchLyrics(firstTrackId);
-    }
-    
-    // 获取所有歌曲URL
-    const ids = getTrackIds(trackList);
-    const { data: urlsData } = await songUrl({ id: ids });
-    
-    // 合并歌曲数据和URL
-    audioList.value = combineTracksWithUrls(trackList, urlsData);
+    // 使用静态音乐列表
+    audioList.value = staticMusicList([]);
     
     // 初始化播放器
     await initializePlayer(audioList.value);
-  } catch (error) {
-    console.error("初始化音乐播放器出错:", error);
-  }
+  } catch (error) {}
 });
 
 onBeforeUnmount(() => {
@@ -213,17 +139,23 @@ if (inBrowser) {
 
 :deep(.aplayer .aplayer-list ol li) {
   background-color: var(--vp-c-bg);
+  border-top: 1px solid #e9e9e930;
+  &:first-child{
+    border-top: none;
+  }
   &:hover {
-    background-color: var(--vp-c-bg);
+    background-color: var(--vp-c-green-soft);
     color: #47ba86;
   }
 }
-
+aplayer-list-author
 :deep(.aplayer .aplayer-list ol li.aplayer-list-light) {
   background-color: var(--vp-c-bg);
   color: #47ba86;
 }
-
+:deep(.aplayer .aplayer-list ol li.aplayer-list-light .aplayer-list-author) {
+  line-height: auto;
+}
 :deep(.aplayer) {
   background: none;
 }
