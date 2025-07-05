@@ -47,6 +47,9 @@ onUnmounted(() => {
         <NavTitle />
       </ClientOnly>
     </template>
+    <template #nav-screen-content-before>
+      <div>111</div>
+    </template>
     <template #layout-bottom>
       <Music />
       <SplashCursor />

@@ -7,7 +7,7 @@
     <div class="notes-list">
       <div v-for="note in notes" :key="note.id" class="note-card" @click="goPost(note.url)">
         <div class="note-image">
-          <img :src="COSURL + 'blog/note-bg3.jpg'" :alt="note.title" data-no-fancybox />
+          <img src="../static/note-bg.webp" :alt="note.title" data-no-fancybox />
         </div>
         <div class="note-content" v-if="note">
           <h3 class="note-title">{{ note.title }}</h3>
@@ -33,7 +33,6 @@
 <script setup>
 import ButtonText from "./ButtonText.vue";
 import { useRouter } from 'vitepress'
-let COSURL = import.meta.env.VITE_APP_COS_URL
 const router = useRouter()
 const props = defineProps({
   notes: {

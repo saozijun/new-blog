@@ -5,7 +5,7 @@
                 <h1 class="page-title">工具箱</h1>
                 <div class="tool-stats">收录一些我常用的工具，持续添加中...</div>
             </div>
-            <img :src="COSURL + '/blog/xiaoxin/bixin.png'" alt="">
+            <img src="../../static/xiaoxin/bixin.webp" alt="">
         </div>
         
         <div class="category-tabs" data-fade style="--lv: 0.5;">
@@ -76,7 +76,6 @@
 
 <script setup>
 import { ref, markRaw, defineAsyncComponent, computed } from 'vue';
-let COSURL = import.meta.env.VITE_APP_COS_URL
 // 异步加载组件
 const ImgTobase64 = defineAsyncComponent(() => 
     import('./components/ImgTobase64.vue')

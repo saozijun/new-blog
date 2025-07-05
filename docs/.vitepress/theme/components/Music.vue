@@ -90,7 +90,7 @@ const updatePlayerPosition = () => {
   const playerBody = document.querySelector(".aplayer-body") as HTMLElement;
   if (!playerBody) return;
   
-  const isNarrowScreen = document.body.clientWidth < 1000;
+  const isNarrowScreen = document.body.clientWidth < 3000;
   playerBody.style.width = isNarrowScreen ? "calc(100% - 40px)" : "400px";
   playerBody.style.left = (isNarrowScreen && !isShown.value) ? "-66px" : "0";
 };

@@ -14,13 +14,11 @@
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { inject } from "vue";
 
-let COSURL = import.meta.env.VITE_APP_COS_URL
-
 // 动态导入图片资源
 const imagesList = Array.from({ length: 44 }, (_, i) => {
   const index = i + 1;
   const formattedIndex = `00${index}`;
-  return `${COSURL}blog/xulie/${formattedIndex}.jpg`;
+  return new URL(`../static/xulie/${formattedIndex}.webp`, import.meta.url).href;
 });
 
 const gsap = inject("gsap");

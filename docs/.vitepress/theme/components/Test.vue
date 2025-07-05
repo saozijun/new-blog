@@ -23,6 +23,12 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import { inject } from "vue";
+import t1 from "../static/test/t1.mp4";
+import t2 from "../static/test/t2.webp";
+import t3 from "../static/test/t3.mp4";
+import t4 from "../static/test/t4.webp";
+import t5 from "../static/test/t5.mp4";
+import t6 from "../static/test/t6.webp";
 const gsap = inject("gsap");
 const containerRef = ref(null);
 const listRef = ref(null);
@@ -31,25 +37,24 @@ const text2Ref = ref(null);
 const textInfoRef = ref(null);
 const maskRef = ref(null);
 const currentText = ref("图1");
-let COSURL = import.meta.env.VITE_APP_COS_URL
 let list = [{
   type: "video",
-  src: `${COSURL}blog/test/t1.mp4`,
+  src: t1,
 }, {
   type: "image",
-  src: `${COSURL}blog/test/t2.jpg`,
+  src: t2,
 }, {
   type: "video",
-  src: `${COSURL}blog/test/t3.mp4`,
+  src: t3,
 }, {
   type: "image",
-  src: `${COSURL}blog/test/t4.jpg`,
+  src: t4,
 }, {
   type: "video",
-  src: `${COSURL}blog/test/t5.mp4`,
+  src: t5,
 }, {
   type: "image",
-  src: `${COSURL}blog/test/t6.jpg`,
+  src: t6,
 }];
 
 onMounted(() => {

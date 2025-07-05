@@ -10,7 +10,7 @@
           <div v-for="note in notes" :key="note.id">
             <div class="note-item" v-if="note" @click="goPost(note.url)">
               <div class="note-image">
-                <img :src="COSURL + 'blog/note-bg3.jpg'" :alt="note.title" data-no-fancybox />
+                <img src="../static/note-bg.webp" :alt="note.title" data-no-fancybox />
               </div>
               <div class="note-content">
                 <h3 class="note-title">{{ note.title }}</h3>
@@ -45,7 +45,8 @@ import ButtonText from "./ButtonText.vue";
 import { ref, onMounted, nextTick } from "vue";
 import { inject } from 'vue'
 import { useRouter } from 'vitepress'
-let COSURL = import.meta.env.VITE_APP_COS_URL
+import noteBg3 from "../static/xiaoxin/bixin.webp";
+import noteBg4 from "../static/xiaoxin/notes.webp";
 const gsap = inject('gsap')
 const props = defineProps({
   notes: {
@@ -53,8 +54,6 @@ const props = defineProps({
     default: () => []
   }
 });
-let noteBg3 = COSURL + '/blog/xiaoxin/bixin.png'
-let noteBg4 = COSURL + '/blog/xiaoxin/notes.png'
 const router = useRouter()
 const noteRef = ref(null);
 const noteBoxRef = ref(null);
@@ -169,7 +168,7 @@ const goPost = (url) => {
       height: 600px;
       border-radius: 15px;
       background-color: var(--vp-c-bg-soft);
-      background: url(https://blog-1256565862.cos.ap-guangzhou.myqcloud.com/blog/note-bg8.jpg) no-repeat center center;
+      background: url(../static/note-bg2.webp) no-repeat center center;
       background-size: cover;
       position: absolute;
       top: 0;

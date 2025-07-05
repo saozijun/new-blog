@@ -17,7 +17,7 @@ tags:
 :::
 
 ## 效果预览
-<img title="Cesium" src="https://blog-1256565862.cos.ap-guangzhou.myqcloud.com/blog/uav.gif" width="100%">
+<img title="Cesium" src="./images/uav.gif" width="100%">
 
 [预览-传送阵](https://cesium.saozijun.top/)
 
