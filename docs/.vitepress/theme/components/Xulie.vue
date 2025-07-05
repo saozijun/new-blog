@@ -58,30 +58,28 @@ onUnmounted(() => {
  * 加载所有图片资源
  */
 const loadImages = async () => {
-  const loadedImages = [];
   const totalImages = imagesList.length;
+  const loadedImages = new Array(totalImages);
   let loadedCount = 0;
-  
-  for (let i = 0; i < totalImages; i++) {
-    const img = new Image();
-    img.src = imagesList[i];
-    await new Promise(resolve => {
-      img.onload = () => {
-        loadedCount++;
-        loadingProgress.value = Math.floor((loadedCount / totalImages) * 100);
-        resolve();
-      };
-      img.onerror = () => {
+
+  // 创建所有加载 Promise
+  const promises = imagesList.map((src, i) => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = img.onerror = () => {
+        loadedImages[i] = img;
         loadedCount++;
         loadingProgress.value = Math.floor((loadedCount / totalImages) * 100);
         resolve();
       };
     });
-    if (img.complete) {
-      loadedImages.push(img);
-    }
-  }
-  
+  });
+
+  // 并行加载所有图片
+  await Promise.all(promises);
+
   images.value = loadedImages;
   loading.value = false;
   return loadedImages;
