@@ -42,12 +42,19 @@
       <div class="base64-section">
         <div class="section-header">
           <h3>Base64 结果</h3>
-          <div class="format-switch">
+          <div class="format-switch" style="margin-left: auto;">
             <label class="switch">
               <input type="checkbox" v-model="appendImgTag">
               <span class="slider"></span>
             </label>
             <span class="switch-label">追加 img 标签</span>
+          </div>
+          <div class="format-switch">
+            <label class="switch">
+              <input type="checkbox" v-model="removePrefix">
+              <span class="slider"></span>
+            </label>
+            <span class="switch-label">去掉 base64 前缀</span>
           </div>
         </div>
         <textarea readonly :value="getResultText" class="base64-result"></textarea>
@@ -71,14 +78,23 @@ const fileInput = ref(null)
 const fileName = ref('')
 const imageBase64 = ref('')
 const appendImgTag = ref(false)
+const removePrefix = ref(false)
 const isDragging = ref(false)
 
 const getResultText = computed(() => {
   if (!imageBase64.value) return ''
-  if (appendImgTag.value) {
-    return `<img src="${imageBase64.value}" alt="" />`
+  let result = imageBase64.value
+  if (removePrefix.value) {
+    // 去掉 data:image/...;base64, 前缀
+    const match = result.match(/^data:image\/[a-zA-Z0-9+]+;base64,(.*)$/)
+    if (match) {
+      result = match[1]
+    }
   }
-  return imageBase64.value
+  if (appendImgTag.value) {
+    return `<img src="${removePrefix.value ? 'data:image/*;base64,' + result : result}" alt="" />`
+  }
+  return result
 })
 
 const triggerFileInput = () => {
@@ -279,7 +295,6 @@ const clearResult = () => {
     .section-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       margin-bottom: 1rem;
       
       h3 {
@@ -293,7 +308,7 @@ const clearResult = () => {
         display: flex;
         align-items: center;
         gap: 8px;
-        
+        margin-left: 20px;
         .switch {
           position: relative;
           display: inline-block;
