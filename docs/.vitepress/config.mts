@@ -71,8 +71,8 @@ export default defineConfig({
       "/post/blog/" :[{
         text: '博客记录',
         items: [
-          { text: '装修清单', link: '/post/blog/decoration' },
-          { text: '站点记录', link: '/post/blog/siteRecords' },
+          { text: '站点清单', link: '/post/blog/decoration' },
+          // { text: '站点记录', link: '/post/blog/siteRecords' },
         ]
       }],
       "/post/components/" :[{

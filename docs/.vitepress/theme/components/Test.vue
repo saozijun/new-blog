@@ -2,17 +2,17 @@
   <div class="t-main">
     <div class="t-container" ref="containerRef">
       <div class="list" ref="listRef">
-        <div class="item" v-for="(item, index) in list" :key="index">
+        <div class="item" v-for="(item, index) in list" :key="index" @click="toPage(item.url)">
           <video v-if="item.type == 'video'" :src="item.src" muted loop autoplay playsinline></video>
           <img v-else :src="item.src" alt="" />
           <div class="mask" ref="maskRef"></div>
           <div class="text-info" ref="textInfoRef">
-            <p>标题 {{ index + 1 }}</p>
-            <span>我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述</span>
+            <p>{{ item.title }}</p>
+            <span>{{ item.desc }}</span>
           </div>
         </div>
       </div>
-      <div class="text" ref="textRef">GSAP-模块测试</div>
+      <div class="text" ref="textRef">项目练习 - DEMO</div>
       <div class="text2" ref="text2Ref">
         {{ currentText }}
       </div>
@@ -23,12 +23,9 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import { inject } from "vue";
-import t1 from "../static/test/t1.mp4";
-import t2 from "../static/test/t2.webp";
-import t3 from "../static/test/t3.mp4";
-import t4 from "../static/test/t4.webp";
-import t5 from "../static/test/t5.mp4";
-import t6 from "../static/test/t6.webp";
+import t21 from "../static/test/t21.webp";
+import t22 from "../static/test/t22.webp";
+import t23 from "../static/test/t23.webp";
 const gsap = inject("gsap");
 const containerRef = ref(null);
 const listRef = ref(null);
@@ -36,25 +33,25 @@ const textRef = ref(null);
 const text2Ref = ref(null);
 const textInfoRef = ref(null);
 const maskRef = ref(null);
-const currentText = ref("图1");
+const currentText = ref("cesium 大屏");
 let list = [{
-  type: "video",
-  src: t1,
+  type: "image",
+  src: t22,
+  title: "cesium 大屏",
+  url: "https://bay.saozijun.top/",
+  desc: "使用 cesium 实现的三维大屏展示,实现了涟漪动画标点，弹窗展示; 多个定制化可视化组件, python 结合 ffmpeg 实现视频流rtmp转码",
 }, {
   type: "image",
-  src: t2,
-}, {
-  type: "video",
-  src: t3,
-}, {
-  type: "image",
-  src: t4,
-}, {
-  type: "video",
-  src: t5,
+  src: t21,
+  title: "cesium 模型加载及航线规划",
+  url: "https://cesium.saozijun.top/",
+  desc: "使用 cesium 实现的无人机模型加载及航线展示, 实现了模型的动态加载和航线的可视化展示",
 }, {
   type: "image",
-  src: t6,
+  src: t23,
+  title: "three.js 房屋模型",
+  url: "https://threedemo.saozijun.top/",
+  desc: "使用 three.js 实现的房屋模型加载及展示, 实现了模型的动态加载和交互展示",
 }];
 
 onMounted(() => {
@@ -62,6 +59,10 @@ onMounted(() => {
     init();
   });
 });
+
+const toPage = (url) => {
+  window.open(url);
+};
 
 const init = () => {
   let item = listRef.value.children;
@@ -95,7 +96,7 @@ const init = () => {
           );
         }
 
-        currentText.value = `图${currentIndex + 1}`;
+        currentText.value = list[currentIndex].title;
       },
     },
   });
@@ -178,7 +179,7 @@ const init = () => {
       span{
         width: 280px;
         display: block;
-        color: #999;
+        color: #dadada;
         font-size: 1.2rem;
       }
     }
@@ -198,9 +199,13 @@ const init = () => {
         position: relative;
         overflow: hidden;
         cursor: pointer;
+        transition: opacity 0.3s ease-in-out;
         &:nth-child(1) {
           transform: scale(1.7);
           z-index: 111;
+        }
+        &:hover {
+          opacity: 0.95;
         }
         video {
           width: 100%;

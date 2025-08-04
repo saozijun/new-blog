@@ -171,4 +171,6 @@ html[data-invert='true']::after {
 
 .VPSwitchAppearance .check {
   transform: none !important;
+  top: 1.8px !important;
+  left: 1.8px !important;
 }

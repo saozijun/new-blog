@@ -11,32 +11,32 @@ import { onMounted, onUnmounted } from "vue";
 toggleDark();
 const { Layout } = DefaultTheme;
 
-let lastScrollY = 0;
+// let lastScrollY = 0;
 
-const handleScroll = () => {
-  const nav = document.querySelector(".VPNav");
-  if (!nav) return;
+// const handleScroll = () => {
+//   const nav = document.querySelector(".VPNav");
+//   if (!nav) return;
 
-  const currentScrollY = window.scrollY;
-  if (currentScrollY < 60) {
-    nav.classList.remove("nav-hidden");
-  } else {
-    if (currentScrollY > lastScrollY) {
-      nav.classList.add("nav-hidden");
-    } else {
-      nav.classList.remove("nav-hidden");
-    }
-  }
-  lastScrollY = currentScrollY;
-};
+//   const currentScrollY = window.scrollY;
+//   if (currentScrollY < 60) {
+//     nav.classList.remove("nav-hidden");
+//   } else {
+//     if (currentScrollY > lastScrollY) {
+//       nav.classList.add("nav-hidden");
+//     } else {
+//       nav.classList.remove("nav-hidden");
+//     }
+//   }
+//   lastScrollY = currentScrollY;
+// };
 
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll, { passive: true });
-});
+// onMounted(() => {
+//   window.addEventListener("scroll", handleScroll, { passive: true });
+// });
 
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+// onUnmounted(() => {
+//   window.removeEventListener("scroll", handleScroll);
+// });
 </script>
 
 <template>

@@ -24,48 +24,90 @@ tags:
 ::: code-group
 
 ```python [main.py]
-# 先用OpenCV进行关键帧提取
-import cv2
+# 使用 python 进行图片压缩
+from PIL import Image
 import os
 
-def video2frame(videos_path, frames_save_path, time_interval):
-    '''
-    :param videos_path: 视频的存放路径
-    :param frames_save_path: 视频切分成帧之后图片的保存路径
-    :param time_interval: 保存间隔
-    :return:
-    '''
-    if not os.path.exists(videos_path):
-        raise FileNotFoundError(f"Video file not found at {videos_path}")
 
-    os.makedirs(frames_save_path, exist_ok=True)
+def compress_to_webp(input_path, output_path, quality=80, max_size=None):
+    try:
+        with Image.open(input_path) as img:
+            # 调整大小（如果需要）
+            if max_size:
+                img.thumbnail(max_size, Image.LANCZOS)
 
-    vidcap = cv2.VideoCapture(videos_path)
-    if not vidcap.isOpened():
-        raise IOError(f"Could not open video file {videos_path}")
+            # 确保输出路径使用.webp扩展名
+            if not output_path.lower().endswith('.webp'):
+                output_path = os.path.splitext(output_path)[0] + '.webp'
 
-    success, image = vidcap.read()
-    count = 0
-    while success:
-        success, image = vidcap.read()
-        if not success:
-            break 
+            # 保存为WebP格式
+            img.save(
+                output_path,
+                format='WEBP',
+                quality=quality,
+                method=6  # 默认方法，平衡压缩速度和质量
+            )
 
-        count += 1
-        if count % time_interval == 0:
-            frame_path = os.path.join(frames_save_path, f"00{int(count / time_interval)}.jpg")
-            cv2.imwrite(frame_path, image)
+            # 获取压缩前后文件大小
+            original_size = os.path.getsize(input_path)
+            compressed_size = os.path.getsize(output_path)
+            compression_ratio = (original_size - compressed_size) / original_size * 100
 
-    print(f"Processed {count} frames")
-    vidcap.release()
+            print(f"压缩完成: {input_path} -> {output_path}")
+            print(f"原始大小: {original_size / 1024:.2f} KB")
+            print(f"压缩后大小: {compressed_size / 1024:.2f} KB")
+            print(f"压缩率: {compression_ratio:.2f}%")
+
+            return output_path
+    except Exception as e:
+        print(f"图像压缩失败: {e}")
+        return None
+
+
+def batch_compress_to_webp(input_dir, output_dir, quality=80, max_size=None):
+    """
+    批量将目录中的所有图像文件压缩为WebP格式
+
+    参数:
+        input_dir (str): 输入目录路径
+        output_dir (str): 输出目录路径
+        quality (int): 压缩质量(1-100)，默认80
+        max_size (tuple): 最大尺寸(宽,高)，可选
+    """
+    # 支持的图像格式
+    supported_formats = ('.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff')
+
+    # 确保输出目录存在
+    os.makedirs(output_dir, exist_ok=True)
+
+    # 遍历输入目录中的所有文件
+    for filename in os.listdir(input_dir):
+        # 检查文件是否是支持的图像格式
+        if filename.lower().endswith(supported_formats):
+            input_path = os.path.join(input_dir, filename)
+
+            # 将输出文件名改为.webp扩展名
+            output_filename = os.path.splitext(filename)[0] + '.webp'
+            output_path = os.path.join(output_dir, output_filename)
+
+            # 压缩图像为WebP格式
+            compress_to_webp(input_path, output_path, quality, max_size)
 
 
 if __name__ == '__main__':
-    videos_path = r'E:\video.mp4' 
-    frames_save_path = r'E:\frames'
-    time_interval = 6  # 我这里分 6 帧 间隔，不然图片太多太大了
+    # 配置参数
+    input_directory = r'E:\pyData\pythonProject5\frames'  # 输入目录
+    output_directory = r'E:\pyData\pythonProject5\framesOut'  # 输出目录
+    compression_quality = 60  # WebP压缩质量 (1-100)
 
-    video2frame(videos_path, frames_save_path, time_interval)
+    # 执行批量压缩
+    print("开始批量压缩图像为WebP格式...")
+    batch_compress_to_webp(
+        input_dir=input_directory,
+        output_dir=output_directory,
+        quality=compression_quality
+    )
+    print("批量压缩完成!")
 ```
 
 ```vue [XuLie.vue]
