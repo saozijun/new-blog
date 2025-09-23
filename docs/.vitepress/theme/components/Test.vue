@@ -86,7 +86,6 @@ const init = () => {
         if (Math.abs(currentX) < firstItemHalfWidth) {
           currentIndex = 0;
         }
-        // 否则，计算后续索引（减去第一个 item 的一半偏移量）
         else {
           currentIndex = Math.min(
             Math.floor(
@@ -102,7 +101,7 @@ const init = () => {
   });
   tl2.to(item[0], { scale: 1, duration: 0.2 }, 0);
   tl2.to(textRef.value, { scale: 0.5, duration: 0.1 }, 0);
-  tl2.to(textRef.value, { scale: 0.25, y: -350, duration: 0.1 }, 0.1);
+  tl2.to(textRef.value, { scale: 0.20, y: "-55%", duration: 0.1 }, 0.1);
   tl2.to(maskRef.value, { opacity: 1, duration: 0.1}, 0.1);
   tl2.to(textInfoRef.value, { opacity: 1, x: 0, duration: 0.1}, 0.1);
   tl2.to(text2Ref.value, { opacity: 1, y: 50, duration: 0.05 }, 0.15);
@@ -121,8 +120,8 @@ const init = () => {
   max-width: 1152px;
   margin: 0 auto;
   box-sizing: border-box;
-  margin-top: 240px;
-  padding-bottom: 150px;
+  margin-top: 140px;
+  padding-bottom: 140px;
   .t-container {
     width: 100%;
     position: relative;
@@ -154,8 +153,8 @@ const init = () => {
     }
     .mask{
       position: absolute;
-      top: -320px;
-      left: -449px;
+      top: -70%;
+      left: -40%;
       width: 150%;
       height: 100%;
       opacity: 0;
@@ -169,9 +168,9 @@ const init = () => {
       left: 0;
       width: 100%;
       height: 100%;
-      font-size: 2rem;
+      font-size: 1.7rem;
       z-index: 2;
-      padding: 26px 40px;
+      padding: 10px 30px;
       color: #fff;
       opacity: 0;
       line-height: 1.8;
@@ -180,12 +179,12 @@ const init = () => {
         width: 280px;
         display: block;
         color: #dadada;
-        font-size: 1.2rem;
+        font-size: 1rem;
       }
     }
     .list {
       width: 100%;
-      height: 630px;
+      height: 70vh;
       position: relative;
       display: flex;
       align-items: center;
@@ -193,7 +192,7 @@ const init = () => {
       .item {
         width: 100%;
         height: 100%;
-        border-radius: 10px;
+        border-radius: 20px;
         flex-shrink: 0;
         background: #0000002a;
         position: relative;
@@ -201,7 +200,7 @@ const init = () => {
         cursor: pointer;
         transition: opacity 0.3s ease-in-out;
         &:nth-child(1) {
-          transform: scale(1.7);
+          transform: scale(2);
           z-index: 111;
         }
         &:hover {

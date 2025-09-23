@@ -86,20 +86,20 @@
     <div class="test-container">
       <Test :list="notes" />
     </div>
-    <div class="mobile-only max-container">
+    <div class="mobile-only max-container" >
       <NotesMobile :notes="notes" />
     </div>
     <div class="desktop-only max-container">
-        <NotesDesktop :notes="notes" />
+      <NotesDesktop :notes="notes" />
     </div>
-    <div class="content max-container">
+    <!-- <div class="content max-container">
       <div v-if="pvCount && uvCount">
         本站总访问量 {{ pvCount }} - 本站访客数 {{ uvCount }}
       </div>
-    </div>
+    </div> -->
   </div>
-  <span id="busuanzi_value_site_pv"></span>
-  <span id="busuanzi_value_site_uv"></span>
+  <!-- <span id="busuanzi_value_site_pv"></span>
+  <span id="busuanzi_value_site_uv"></span> -->
 </template>
 
 <script setup>
@@ -207,6 +207,10 @@ onUnmounted(() => {
   height: 40vh;
   overflow: hidden;
   box-sizing: border-box;
+  &:hover{
+    // 取消 鼠标样式
+    cursor: none;
+  }
 }
 
 .max-container {
@@ -219,7 +223,7 @@ onUnmounted(() => {
 }
 .hero {
   width: 100%;
-  height: calc(100vh - 64px);
+  // height: calc(100vh - 64px);
   text-align: center;
   display: flex;
   flex-direction: column;

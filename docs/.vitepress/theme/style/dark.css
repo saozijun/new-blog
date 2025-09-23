@@ -10,7 +10,6 @@ body {
   view-transition-name: body;
 }
 
-/* 主题背景色切换 */
 html {
   width: 100vw;
   transition: background var(--duration) var(--ease);
@@ -21,7 +20,9 @@ html {
   transform: perspective(var(--perspective)) translate3d(0, 0, 0);
   animation: travel var(--duration);
   backface-visibility: hidden;
-  background: inherit; /* 继承html的背景色 */
+  background: inherit;
+  transform-origin: var(--origin-x) var(--origin-y);
+  clip-path: var(--clip-path);
 }
 
 ::view-transition-new(body) {
@@ -77,12 +78,13 @@ html {
 
 html::before,
 html::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   background-size: cover;
-  transition: opacity calc(var(--duration) * 0.25) calc(var(--duration) * 0.5) ease-out,
+  transition: opacity calc(var(--duration) * 0.25) calc(var(--duration) * 0.5)
+      ease-out,
     background-position calc(var(--duration) * 1) ease-out;
   z-index: -1;
   opacity: 0;
@@ -104,48 +106,60 @@ html::after {
 }
 
 /* 主题背景控制 */
-html[data-invert='true'] {
+html[data-invert="true"] {
   background: #34d0ff;
 }
 
-html[data-invert='false'] {
+html[data-invert="false"] {
   background: #01022e;
 }
 
 /* 夜间模式星星显示 */
-html[data-invert='false']::after {
+html[data-invert="false"]::after {
   opacity: 1;
 }
 
-html[data-invert='false']::before {
+html[data-invert="false"]::before {
   opacity: 0;
 }
 
-html.is-transitioning[data-invert='false']::before {
+html.is-transitioning[data-invert="false"]::before {
   animation: cloudMove 1.2s linear infinite;
 }
 
 /* 白天模式云彩显示 */
-html[data-invert='true']::before {
+html[data-invert="true"]::before {
   opacity: 0;
 }
 
-html.is-transitioning[data-invert='true']::before {
+html.is-transitioning[data-invert="true"]::before {
   animation: starsMove 1.2s linear infinite;
 }
 
-html[data-invert='true']::after {
+html[data-invert="true"]::after {
   opacity: 0;
 }
 
 @keyframes cloudMove {
-  0% { background-position: 0 0; opacity: 0.1; }
-  100% { background-position: -100px 0; opacity: 1; }
+  0% {
+    background-position: 0 0;
+    opacity: 0.1;
+  }
+  100% {
+    background-position: -100px 0;
+    opacity: 1;
+  }
 }
 
 @keyframes starsMove {
-  0% { background-position: -100px 0; opacity: 1; }
-  100% { background-position: 0 0;  opacity: 0.1; }
+  0% {
+    background-position: -100px 0;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0 0;
+    opacity: 0.1;
+  }
 }
 
 /* 初始状态控制 */

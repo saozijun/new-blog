@@ -131,9 +131,9 @@ const init = () => {
   // 标题和底部动画
   tl.to(noteT3Ref.value, { opacity: 0, scale: 0, duration: 2 }, 2)
     .to(noteT5Ref.value, { opacity: 0, scale: 0, duration: 2 }, 2)
-    .to(noteT3Ref.value, { opacity: 1, y: -260, duration: 2, scale: 0.8 }, 5)
-    .to(noteT5Ref.value, { opacity: 0.2, y: -250, duration: 3, scale: 1.6 }, 5)
-    .to(noteBoxFooterRef.value, { opacity: 1, y: 360, duration: 3 }, 5)
+    .to(noteT3Ref.value, { opacity: 1, y: -230, duration: 2, scale: 0.8 }, 5)
+    .to(noteT5Ref.value, { opacity: 0.2, y: -220, duration: 3, scale: 1.6 }, 5)
+    .to(noteBoxFooterRef.value, { opacity: 1, y: 320, duration: 3 }, 5)
     .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`,duration: 0}, 2.5)
     .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`, duration: 0}, 2.8)
     .to(noteBoxInnerRef.value, { background: `url(${noteBg3}) no-repeat center center`, duration: 0}, 3.3)
@@ -160,18 +160,18 @@ const goPost = (url) => {
   .note-box {
     width: 100%;
     margin: 0 auto;
-    height: calc(100vh - 400px);
+    height: 60vh;
     position: relative;
 
     .note-box-inner {
       width: 100%;
-      height: 600px;
+      height: 65vh;
       border-radius: 15px;
       background-color: var(--vp-c-bg-soft);
       background: url(../static/note-bg2.webp) no-repeat center center;
       background-size: cover;
       position: absolute;
-      top: 0;
+      top: -6%;
       left: 50%;
       transform: translate(-50%, -50%);
 
@@ -316,7 +316,7 @@ const goPost = (url) => {
       color: #9ab6ad; //#9ab6ad
       mix-blend-mode: difference;
       p {
-        font-size: 48px;
+        font-size: 36px;
         line-height: 1;
         margin: 0;
         
@@ -332,7 +332,7 @@ const goPost = (url) => {
           background-clip: text;
           font-weight: bold;
           -webkit-background-clip: text;
-          font-size: 50px;
+          font-size: 40px;
         }
       }
     }
