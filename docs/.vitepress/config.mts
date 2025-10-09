@@ -119,6 +119,9 @@ export default defineConfig({
     plugins: [
       groupIconVitePlugin()
     ],
+    server: {
+      host: '0.0.0.0',
+    },
     css: {
       preprocessorOptions: {
         scss: {

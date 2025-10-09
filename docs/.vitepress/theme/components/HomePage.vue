@@ -207,10 +207,6 @@ onUnmounted(() => {
   height: 40vh;
   overflow: hidden;
   box-sizing: border-box;
-  &:hover{
-    // 取消 鼠标样式
-    cursor: none;
-  }
 }
 
 .max-container {

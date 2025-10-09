@@ -27,7 +27,11 @@
     border-radius: 4rem;
   }
 }
-
+@media (max-width: 768px) {
+    .DocSearch-Container {
+        position: fixed;
+    }
+}
 .VPLocalSearchBox {
   --at-apply: "animate-fade-in animate-duration-200";
   .shell {
