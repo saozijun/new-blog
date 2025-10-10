@@ -8,7 +8,8 @@ export default defineConfig({
   lang: 'zh-CN',
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['meta', { name: 'baidu-site-verification', content: 'codeva-zXpwuyTbP1' }]
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-zXpwuyTbP1' }],
+    ['meta', { name: 'google-site-verification', content: 'kif-UZYrnqeYeosHi253DaK1ZBPZvKG3ErgbTZeIalg' }]
   ],
   themeConfig: {
     algolia: {
