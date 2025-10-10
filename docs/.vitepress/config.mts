@@ -7,7 +7,8 @@ export default defineConfig({
   lastUpdated: true,
   lang: 'zh-CN',
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }]
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-zXpwuyTbP1' }]
   ],
   themeConfig: {
     algolia: {
