@@ -11,6 +11,9 @@ export default defineConfig({
     ['meta', { name: 'baidu-site-verification', content: 'codeva-zXpwuyTbP1' }],
     ['meta', { name: 'google-site-verification', content: 'kif-UZYrnqeYeosHi253DaK1ZBPZvKG3ErgbTZeIalg' }]
   ],
+  sitemap: {
+    hostname: 'https://blog.saozijun.top',
+  },
   themeConfig: {
     algolia: {
       appId: 'AXM965G3FO',
