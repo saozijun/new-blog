@@ -14,6 +14,7 @@
     "nprogress": "^0.2.0",
     "particles.js": "^2.0.0",
     "sass": "^1.89.2",
+    "three": "^0.180.0",
     "vitepress": "^1.6.3",
     "vitepress-plugin-group-icons": "^1.6.0"
   },

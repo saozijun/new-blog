@@ -57,6 +57,7 @@ export default defineConfig({
       { text: '主页', link: '/' },
       { text: '工具', link: '/tool'},
       { text: '归档', link: '/archive'},
+      { text: '相册', link: '/photo'},
       { text: '标签', link: '/tag'},
       { 
         text: '笔记',
