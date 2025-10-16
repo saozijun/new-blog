@@ -410,7 +410,7 @@ onUnmounted(() => {
 <style>
 .album-container {
     width: 100%;
-    height: calc(100vh - 153px);
+    height: calc(100dvh - 153px);
     overflow: hidden;
     cursor: grab;
     position: relative;
