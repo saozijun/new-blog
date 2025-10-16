@@ -194,7 +194,11 @@ const animate = () => {
         const targetScale = (child === hoveredObject && !focusedObject) ? 1.2 : 1.0;
         child.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
         if (!focusedObject) {
-            child.lookAt(camera.position);
+            // child.lookAt(camera.position); // 图片中心朝向摄像机
+            const parentQuaternion = group.quaternion;
+            const inverseParentQuaternion = parentQuaternion.clone().invert();
+            const targetQuaternion = inverseParentQuaternion.multiply(camera.quaternion);
+            child.quaternion.copy(targetQuaternion);
         }
 
         if (child.material.opacity !== child.userData.targetOpacity) {
