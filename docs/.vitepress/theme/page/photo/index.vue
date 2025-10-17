@@ -31,6 +31,7 @@ const focusedItemData = ref(null);
 // --- Three.js 核心变量 ---
 let scene, camera, renderer;
 let group;
+let lastFocusedObject = null; // 新增：用于存储最后被聚焦的对象
 let autoRotateSpeed = 0.0005;
 
 // --- 交互状态变量 ---
@@ -50,13 +51,13 @@ const originalCameraState = {
     quaternion: new THREE.Quaternion()
 };
 
-// --- 新增：惯性滚动变量 ---
-const inertia = { x: 0, y: 0 }; // 存储当前的惯性速度
-const damping = 0.95;     // 阻尼系数，值越接近1，滚动时间越长
-let lastDelta = { x: 0, y: 0 }; // 记录最后一次拖拽的delta值
+// --- 惯性滚动变量 ---
+const inertia = { x: 0, y: 0 };
+const damping = 0.95;
+let lastDelta = { x: 0, y: 0 };
 
-// --- 新增：垂直拖动范围限制 ---
-const verticalDragLimit = Math.PI / 4; // 45度 (Math.PI / 4)，总范围为90度
+// --- 垂直拖动范围限制 ---
+const verticalDragLimit = Math.PI / 4;
 
 // --- 图片元数据 ---
 const imageData = [
@@ -133,8 +134,6 @@ const createImagePlanes = () => {
             const z = Math.sin(theta) * radiusAtY;
             plane.position.set(x * xRadius, y * yRadius, z * zRadius);
 
-            // plane.rotation.z = (Math.random() - 0.5) * Math.PI * 0.1;
-
             plane.userData.originalScale = plane.scale.clone();
             plane.userData.itemData = item;
             plane.userData.targetOpacity = 1.0;
@@ -147,37 +146,27 @@ const createImagePlanes = () => {
 const animate = () => {
     requestAnimationFrame(animate);
 
-    // 检查是否有显著的惯性
     const hasInertia = Math.abs(inertia.x) > 0.0001 || Math.abs(inertia.y) > 0.0001;
 
     if (!isDragging && hasInertia) {
-        // --- 修改：应用惯性并限制垂直范围 ---
         const newRotationX = group.rotation.x + inertia.x;
-
-        // 如果惯性运动到达边界，则停止该方向的惯性
         if (newRotationX > verticalDragLimit || newRotationX < -verticalDragLimit) {
             inertia.x = 0;
         }
         group.rotation.x = Math.max(-verticalDragLimit, Math.min(verticalDragLimit, newRotationX));
         group.rotation.y += inertia.y;
-
-        // 应用阻尼
         inertia.x *= damping;
         inertia.y *= damping;
     } else if (!isDragging && !focusedObject && !isFocusing && !isUnfocusing) {
-        // 自动旋转并限制垂直范围
         group.rotation.y += autoRotateSpeed;
-
-        // --- 修改：对自动旋转也施加垂直范围限制 ---
-        // const newAutoRotationX = group.rotation.x + autoRotateSpeed * 0.3;
-        // group.rotation.x = Math.max(-verticalDragLimit, Math.min(verticalDragLimit, newAutoRotationX));
     }
 
-    // 遍历所有图片平面，更新其状态
+    // 遍历所有在 group 中的图片平面，更新其状态
     group.children.forEach(child => {
         const targetScale = (child === hoveredObject && !focusedObject) ? 1.2 : 1.0;
         child.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
 
+        // 当没有物体被聚焦时，让 group 内的所有子物体朝向相机
         if (!focusedObject) {
             const parentQuaternion = group.quaternion;
             const inverseParentQuaternion = parentQuaternion.clone().invert();
@@ -192,6 +181,12 @@ const animate = () => {
             }
         }
     });
+
+    // --- 关键修改：单独处理被聚焦的对象（它现在是 scene 的子对象） ---
+    if (lastFocusedObject && (isFocusing || focusedObject)) {
+        // 因为它的父级是 scene（没有旋转），所以直接让它匹配相机的旋转即可
+        lastFocusedObject.quaternion.copy(camera.quaternion);
+    }
 
     if (isFocusing) {
         camera.position.lerp(cameraTargetPosition, 0.08);
@@ -258,8 +253,6 @@ const onMouseDown = (e) => {
     const pos = getEventPosition(e);
     previousMousePosition.x = pos.clientX;
     previousMousePosition.y = pos.clientY;
-
-    // 开始拖拽时，停止所有惯性
     inertia.x = 0;
     inertia.y = 0;
 };
@@ -274,14 +267,9 @@ const onMouseMove = (e) => {
 
         if (!focusedObject && !isFocusing && !isUnfocusing) {
             group.rotation.y += deltaX * 0.005;
-
-            // --- 修改：计算新的X轴旋转并施加限制 ---
             const newRotationX = group.rotation.x + deltaY * 0.005;
             group.rotation.x = Math.max(-verticalDragLimit, Math.min(verticalDragLimit, newRotationX));
-
-            // 记录最后的拖拽速度，用于惯性计算
             lastDelta.x = deltaX;
-            // --- 修改：如果已达到边界，则不记录垂直拖拽速度，防止惯性“粘”在边界上 ---
             if (newRotationX >= verticalDragLimit || newRotationX <= -verticalDragLimit) {
                 lastDelta.y = 0;
             } else {
@@ -302,7 +290,6 @@ const onMouseMove = (e) => {
 
 const onMouseUp = () => {
     if (isDragging) {
-        // 设置初始惯性
         inertia.y = lastDelta.x * 0.005;
         inertia.x = lastDelta.y * 0.005;
         lastDelta = { x: 0, y: 0 };
@@ -312,34 +299,45 @@ const onMouseUp = () => {
 
 const onMouseClick = () => {
     if (dragMovement > 5) return;
-    if (hoveredObject && !focusedObject && !isFocusing && !isUnfocusing) {
-        focusedObject = hoveredObject;
-        focusedItemData.value = focusedObject.userData.itemData;
-        isFocusing = true;
-        isUnfocusing = false;
 
-        originalCameraState.position.copy(camera.position);
-        originalCameraState.quaternion.copy(camera.quaternion);
+    const canFocus = hoveredObject && !focusedObject && !isFocusing && !isUnfocusing;
+    if (!canFocus) return;
 
-        focusedObject.getWorldPosition(cameraTargetLookAt);
-        const normal = new THREE.Vector3(0, 0, 1);
-        normal.applyQuaternion(focusedObject.getWorldQuaternion(new THREE.Quaternion()));
-        const distance = 6;
-        cameraTargetPosition.copy(cameraTargetLookAt).add(normal.multiplyScalar(distance));
+    // --- 开始执行聚焦逻辑 ---
+    scene.updateMatrixWorld();
 
-        overlay.value.style.opacity = '1';
-        overlay.value.style.pointerEvents = 'auto';
+    focusedObject = hoveredObject;
+    lastFocusedObject = focusedObject;
+    scene.attach(focusedObject);
 
-        group.children.forEach(child => {
-            if (child !== focusedObject) {
-                child.userData.targetOpacity = 0;
-            }
-        });
-    }
+    focusedItemData.value = focusedObject.userData.itemData;
+    isFocusing = true;
+    isUnfocusing = false;
+
+    originalCameraState.position.copy(camera.position);
+    originalCameraState.quaternion.copy(camera.quaternion);
+
+    focusedObject.getWorldPosition(cameraTargetLookAt);
+    const normal = new THREE.Vector3(0, 0, 1);
+    const worldQuaternion = new THREE.Quaternion();
+    focusedObject.getWorldQuaternion(worldQuaternion);
+    normal.applyQuaternion(worldQuaternion);
+
+    const distance = 6;
+    cameraTargetPosition.copy(cameraTargetLookAt).add(normal.multiplyScalar(distance));
+
+    overlay.value.style.opacity = '1';
+    overlay.value.style.pointerEvents = 'auto';
+
+    group.children.forEach(child => {
+        if (child !== focusedObject) {
+            child.userData.targetOpacity = 0;
+        }
+    });
 };
 
 const closeFocusedView = () => {
-    if (focusedObject) {
+    if (lastFocusedObject) { // 使用新变量来判断
         focusedItemData.value = null;
         isUnfocusing = true;
         isFocusing = false;
@@ -347,10 +345,14 @@ const closeFocusedView = () => {
         overlay.value.style.opacity = '0';
         overlay.value.style.pointerEvents = 'none';
 
+        group.attach(lastFocusedObject); // 关键修复：将对象还回 group
+
         group.children.forEach(child => {
             child.userData.targetOpacity = 1.0;
         });
+
         focusedObject = null;
+        lastFocusedObject = null; // 清理保存的对象
     }
 };
 
@@ -423,7 +425,7 @@ onUnmounted(() => {
 
 .text-overlay {
     position: absolute;
-    bottom: 0%;
+    bottom: -4%;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
