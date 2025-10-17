@@ -1,32 +1,8 @@
 <template>
-  <div class="container" :class="className">
-    <button class="button">{{ text }}</button>
-    <span class="arrow first">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
-        ></path>
-      </svg>
-    </span>
-    <span class="arrow second">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
-        ></path>
-      </svg>
-    </span>
-    <span class="arrow third">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
-        ></path>
-      </svg>
-    </span>
-  </div>
+  <a href="#" :class="className" class="menu__link">{{text}}</a>
 </template>
 
 <script setup>
-import { ref } from "vue";
 let props = defineProps({
   text: {
     type: String,
@@ -40,50 +16,34 @@ let props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.container {
-  position: relative;
+
+a {
+  text-decoration: none;
+  font-size: .9rem;
 }
-.button {
-  cursor: pointer;
-  background: none;
-  border: none;
-  border-radius: 8px;
-  padding: 0.5em 1.5em;
-  font-size: 16px;
-  font-weight: 600;
+.menu__link {
   color: var(--vp-c-text-1);
-  transition: all 0.3s ease;
+  line-height: 2;
   position: relative;
 }
 
-.arrow {
-  fill: var(--vp-c-text-1);
+.menu__link::before {
+  content: '';
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background-color: var(--vp-c-brand);
   position: absolute;
-  pointer-events: none;
-  width: 24px;
+  bottom: -.05rem;
   right: 0;
-  top: 18%;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: right .4s, width .4s, left .4s;
 }
 
-.button:hover {
-  letter-spacing: 2px;
-}
-
-.button:hover ~ .second {
-  opacity: 0.66;
-  right: -20px;
-  transition-delay: 50ms;
-}
-
-.button:hover ~ .third {
-  opacity: 0.33;
-  right: -40px;
-  transition-delay: 100ms;
-}
-
-.second,
-.third {
-  opacity: 0;
+.menu__link:hover {
+  color: var(--vp-c-brand);
+  &::before {
+    width: 100%;
+    left: 0;
+  }
 }
 </style>

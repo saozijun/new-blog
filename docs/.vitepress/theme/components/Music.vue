@@ -48,7 +48,7 @@ const initializePlayer = async (tracks: Track[]) => {
       fixed: true,
       autoplay: false,
       lrcType: 1,
-      theme: "#47ba86",
+      theme: "#47ba86"
     });
     
     setupEventListeners();
@@ -66,6 +66,8 @@ const setupEventListeners = () => {
     if (switcherElement) {
       switcherElement.addEventListener("click", handleSwitcherClick);
     }
+    const lrcButton = document.querySelector(".aplayer-icon-lrc") as HTMLElement;
+    if (lrcButton) lrcButton.click();
     updatePlayerPosition();
   });
   

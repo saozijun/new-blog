@@ -131,8 +131,8 @@ const init = () => {
   // 标题和底部动画
   tl.to(noteT3Ref.value, { opacity: 0, scale: 0, duration: 2 }, 2)
     .to(noteT5Ref.value, { opacity: 0, scale: 0, duration: 2 }, 2)
-    .to(noteT3Ref.value, { opacity: 1, y: -230, duration: 2, scale: 0.8 }, 5)
-    .to(noteT5Ref.value, { opacity: 0.2, y: -220, duration: 3, scale: 1.6 }, 5)
+    .to(noteT3Ref.value, { opacity: 1, y: -200, duration: 2, scale: 0.8 }, 5)
+    .to(noteT5Ref.value, { opacity: 0.2, y: -260, duration: 3, scale: 1.6 }, 5)
     .to(noteBoxFooterRef.value, { opacity: 1, y: 320, duration: 3 }, 5)
     .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`,duration: 0}, 2.5)
     .to(noteBoxInnerRef.value, { background: `url(${noteBg4}) no-repeat center center`, duration: 0}, 2.8)
@@ -345,6 +345,12 @@ const goPost = (url) => {
   justify-content: space-between;
   align-items: center;
   opacity: 0;
+  padding-left: 60px;
+  padding-right: 125px;
+  padding-top: 10px;
+  p {
+    font-size: 0.9rem;
+  }
   div {
     cursor: pointer;
   }

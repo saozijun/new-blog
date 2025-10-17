@@ -8,7 +8,7 @@
         <div class="sign-box">
           <Sign />
         </div>
-        <h1 class="tagline">A personal blog to share something interesting.</h1>
+        <h1 class="tagline">{{ tagline }}</h1>
         <div class="subtitle">
           <span
             >嘘
@@ -54,7 +54,7 @@
 
               <div class="social-links">
                 <a
-                  v-for="(social, index) in socials"
+                  v-for="(social, index) in socialLinks"
                   :key="index"
                   :href="social.link"
                   target="_blank"
@@ -68,7 +68,7 @@
                   - 技术栈 -
                 </div>
                 <Marquee>
-                  <div class="lable-item" v-for="(v, i) in labelList" :key="i">
+                  <div class="lable-item" v-for="(v, i) in techStack" :key="i">
                     {{ v }}
                   </div>
                 </Marquee>
@@ -92,14 +92,7 @@
     <div class="desktop-only max-container">
       <NotesDesktop :notes="notes" />
     </div>
-    <!-- <div class="content max-container">
-      <div v-if="pvCount && uvCount">
-        本站总访问量 {{ pvCount }} - 本站访客数 {{ uvCount }}
-      </div>
-    </div> -->
   </div>
-  <!-- <span id="busuanzi_value_site_pv"></span>
-  <span id="busuanzi_value_site_uv"></span> -->
 </template>
 
 <script setup>
@@ -112,33 +105,11 @@ import NotesDesktop from "./NotesDesktop.vue";
 import NotesMobile from "./NotesMobile.vue";
 import Test from "./Test.vue";
 
-import { ref, onMounted, nextTick, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { data } from "../utils/post.data";
-import { useRouter } from 'vitepress';
+import { bio, hobbies, socialLinks, techStack, tagline } from '../utils/home.config.js';
 
-const router = useRouter();
 const notes = ref([]);
-const labelList = ref([
-  "CSS",
-  "HTML",
-  "Javascript",
-  "Vitepress",
-  "Vue",
-  "React",
-  "Springboot",
-  "Python",
-  "nodejs",
-  "mapboxGl",
-]);
-const pvCount = ref(null);
-const uvCount = ref(null);
-const getPv = () => {
-  const $PV = document.querySelector("#busuanzi_value_site_pv");
-  const $UV = document.querySelector("#busuanzi_value_site_uv");
-  pvCount.value = $PV.innerHTML;
-  uvCount.value = $UV.innerHTML;
-};
-
 const progressHeight = ref("0px");
 
 const handleScroll = () => {
@@ -155,21 +126,7 @@ const handleScroll = () => {
   progressHeight.value = `${Math.min(newHeight, mouseInnerHeight)}px`;
 };
 
-const hobbies = ref([
-  { name: "编程", icon: "💻" },
-  { name: "动漫", icon: "📖" },
-  { name: "音乐", icon: "🎵" },
-  { name: "旅行", icon: "✈️" },
-]);
 
-const socials = ref([
-  { name: "blibli", link: "" },
-  { name: "抖音", link: "" },
-]);
-
-const bio = ref(
-  "热爱编程与设计的前端开发者，致力于创造美观且实用的网站体验。喜欢探索新技术，分享有趣的发现。闲暇时间喜欢打游戏、听音乐和看动漫。"
-);
 
 // 获取最新的6篇文章
 const getLatestPosts = () => {
@@ -181,11 +138,6 @@ const getLatestPosts = () => {
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
   getLatestPosts();
-  nextTick(async () => {
-    setTimeout(() => {
-      getPv();
-    }, 500);
-  });
 });
 
 onUnmounted(() => {
@@ -196,7 +148,6 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .home-page {
   width: 100%;
-  // padding-top: 40px;
 }
 
 .image-trail{
@@ -219,7 +170,7 @@ onUnmounted(() => {
 }
 .hero {
   width: 100%;
-  // height: calc(100vh - 64px);
+  min-height: calc(100vh - 53px);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -251,7 +202,7 @@ onUnmounted(() => {
 }
 
 .sign-box {
-  width: 260px;
+  width: 340px;
   margin: 0 auto;
 }
 
