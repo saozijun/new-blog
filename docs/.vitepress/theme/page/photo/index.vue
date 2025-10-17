@@ -133,7 +133,7 @@ const createImagePlanes = () => {
             const z = Math.sin(theta) * radiusAtY;
             plane.position.set(x * xRadius, y * yRadius, z * zRadius);
 
-            plane.rotation.z = (Math.random() - 0.5) * Math.PI * 0.1;
+            // plane.rotation.z = (Math.random() - 0.5) * Math.PI * 0.1;
 
             plane.userData.originalScale = plane.scale.clone();
             plane.userData.itemData = item;
@@ -169,8 +169,8 @@ const animate = () => {
         group.rotation.y += autoRotateSpeed;
 
         // --- 修改：对自动旋转也施加垂直范围限制 ---
-        const newAutoRotationX = group.rotation.x + autoRotateSpeed * 0.3;
-        group.rotation.x = Math.max(-verticalDragLimit, Math.min(verticalDragLimit, newAutoRotationX));
+        // const newAutoRotationX = group.rotation.x + autoRotateSpeed * 0.3;
+        // group.rotation.x = Math.max(-verticalDragLimit, Math.min(verticalDragLimit, newAutoRotationX));
     }
 
     // 遍历所有图片平面，更新其状态
@@ -394,7 +394,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style>
+<style scoped lang="scss">
 .album-container {
     width: 100%;
     height: calc(100vh - 153px);
