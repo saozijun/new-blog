@@ -52,8 +52,11 @@ const originalCameraState = {
 
 // --- 新增：惯性滚动变量 ---
 const inertia = { x: 0, y: 0 }; // 存储当前的惯性速度
-const damping = 0.95;          // 阻尼系数，值越接近1，滚动时间越长
+const damping = 0.95;     // 阻尼系数，值越接近1，滚动时间越长
 let lastDelta = { x: 0, y: 0 }; // 记录最后一次拖拽的delta值
+
+// --- 新增：垂直拖动范围限制 ---
+const verticalDragLimit = Math.PI / 4; // 45度 (Math.PI / 4)，总范围为90度
 
 // --- 图片元数据 ---
 const imageData = [
@@ -144,22 +147,30 @@ const createImagePlanes = () => {
 const animate = () => {
     requestAnimationFrame(animate);
 
-    // --- 修改/替换自动旋转逻辑 ---
     // 检查是否有显著的惯性
     const hasInertia = Math.abs(inertia.x) > 0.0001 || Math.abs(inertia.y) > 0.0001;
 
     if (!isDragging && hasInertia) {
-        // 如果没有拖拽且存在惯性，则应用惯性滚动
-        group.rotation.x += inertia.x;
+        // --- 修改：应用惯性并限制垂直范围 ---
+        const newRotationX = group.rotation.x + inertia.x;
+
+        // 如果惯性运动到达边界，则停止该方向的惯性
+        if (newRotationX > verticalDragLimit || newRotationX < -verticalDragLimit) {
+            inertia.x = 0;
+        }
+        group.rotation.x = Math.max(-verticalDragLimit, Math.min(verticalDragLimit, newRotationX));
         group.rotation.y += inertia.y;
 
-        // 应用阻尼，使惯性逐渐减小
+        // 应用阻尼
         inertia.x *= damping;
         inertia.y *= damping;
     } else if (!isDragging && !focusedObject && !isFocusing && !isUnfocusing) {
-        // 如果没有拖拽、没有惯性、没有聚焦等交互，才执行自动旋转
+        // 自动旋转并限制垂直范围
         group.rotation.y += autoRotateSpeed;
-        group.rotation.x += autoRotateSpeed * 0.3;
+
+        // --- 修改：对自动旋转也施加垂直范围限制 ---
+        const newAutoRotationX = group.rotation.x + autoRotateSpeed * 0.3;
+        group.rotation.x = Math.max(-verticalDragLimit, Math.min(verticalDragLimit, newAutoRotationX));
     }
 
     // 遍历所有图片平面，更新其状态
@@ -249,7 +260,7 @@ const onMouseDown = (e) => {
     previousMousePosition.x = pos.clientX;
     previousMousePosition.y = pos.clientY;
 
-    // --- 新增：停止惯性 ---
+    // 开始拖拽时，停止所有惯性
     inertia.x = 0;
     inertia.y = 0;
 };
@@ -260,13 +271,22 @@ const onMouseMove = (e) => {
         const deltaX = pos.clientX - previousMousePosition.x;
         const deltaY = pos.clientY - previousMousePosition.y;
         dragMovement += Math.abs(deltaX) + Math.abs(deltaY);
+
         if (!focusedObject && !isFocusing && !isUnfocusing) {
             group.rotation.y += deltaX * 0.005;
-            group.rotation.x += deltaY * 0.005;
 
-            // --- 新增：记录最后的拖拽速度 ---
+            // --- 修改：计算新的X轴旋转并施加限制 ---
+            const newRotationX = group.rotation.x + deltaY * 0.005;
+            group.rotation.x = Math.max(-verticalDragLimit, Math.min(verticalDragLimit, newRotationX));
+
+            // 记录最后的拖拽速度，用于惯性计算
             lastDelta.x = deltaX;
-            lastDelta.y = deltaY;
+            // --- 修改：如果已达到边界，则不记录垂直拖拽速度，防止惯性“粘”在边界上 ---
+            if (newRotationX >= verticalDragLimit || newRotationX <= -verticalDragLimit) {
+                lastDelta.y = 0;
+            } else {
+                lastDelta.y = deltaY;
+            }
         }
         previousMousePosition.x = pos.clientX;
         previousMousePosition.y = pos.clientY;
@@ -282,10 +302,9 @@ const onMouseMove = (e) => {
 
 const onMouseUp = () => {
     if (isDragging) {
-        // --- 新增：设置初始惯性 ---
+        // 设置初始惯性
         inertia.y = lastDelta.x * 0.005;
         inertia.x = lastDelta.y * 0.005;
-
         lastDelta = { x: 0, y: 0 };
     }
     isDragging = false;
