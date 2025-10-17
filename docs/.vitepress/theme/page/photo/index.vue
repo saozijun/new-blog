@@ -199,8 +199,7 @@ const animate = () => {
             new THREE.Matrix4().lookAt(camera.position, cameraTargetLookAt, camera.up)
         );
         camera.quaternion.slerp(targetQuaternion, 0.08);
-
-        if (camera.position.distanceTo(cameraTargetPosition) < 0.05) {
+        if (camera.position.distanceTo(cameraTargetPosition) < 0.04) {
             camera.position.copy(cameraTargetPosition);
             camera.quaternion.copy(targetQuaternion);
             isFocusing = false;
@@ -232,8 +231,8 @@ const addEventListeners = () => {
     el.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
     el.addEventListener('click', onMouseClick);
-    el.addEventListener('touchstart', onMouseDown, { passive: true });
-    el.addEventListener('touchmove', onMouseMove, { passive: true });
+    el.addEventListener('touchstart', onMouseDown, { passive: false });
+    el.addEventListener('touchmove', onMouseMove, { passive: false });
     window.addEventListener('touchend', onMouseUp);
     el.addEventListener('wheel', onWheel);
     window.addEventListener('resize', onWindowResize);
@@ -266,6 +265,7 @@ const onMouseDown = (e) => {
 };
 
 const onMouseMove = (e) => {
+    e.preventDefault();
     const pos = getEventPosition(e);
     if (isDragging) {
         const deltaX = pos.clientX - previousMousePosition.x;
